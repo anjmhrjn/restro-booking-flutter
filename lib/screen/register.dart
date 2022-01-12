@@ -20,7 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(35.0),
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             child: Form(
               child: Column(
                 children: [
@@ -35,9 +35,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 45,
+                    height: 30,
                   ),
                   Container(
+                    padding: EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                       color: Color(0xFFF6F2EC),
                       borderRadius: BorderRadius.all(
@@ -54,14 +55,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(20.0),
+                        icon: Icon(Icons.person),
+                        contentPadding: EdgeInsets.only(top: 10, bottom: 10),
                         labelText: 'Username',
                         hintText: 'Enter your username',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50.0),
-                          ),
-                        ),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
@@ -69,6 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 30,
                   ),
                   Container(
+                    padding: EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                       color: Color(0xFFF6F2EC),
                       borderRadius: BorderRadius.all(
@@ -86,14 +85,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(20.0),
+                        icon: Icon(Icons.email),
+                        contentPadding: EdgeInsets.only(top: 10, bottom: 10),
                         labelText: 'Email',
                         hintText: 'Enter your email',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50.0),
-                          ),
-                        ),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
@@ -101,6 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 30,
                   ),
                   Container(
+                    padding: EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                       color: Color(0xFFF6F2EC),
                       borderRadius: BorderRadius.all(
@@ -125,13 +122,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }).toList(),
                       onChanged: (value) {},
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(20.0),
+                        icon: Icon(Icons.group),
+                        contentPadding: EdgeInsets.only(top: 10, bottom: 10),
                         hintText: 'User Type',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50.0),
-                          ),
-                        ),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
@@ -139,6 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 30,
                   ),
                   Container(
+                    padding: EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                       color: Color(0xFFF6F2EC),
                       borderRadius: BorderRadius.all(
@@ -156,14 +151,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: TextFormField(
                       obscureText: true,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(20.0),
+                        icon: Icon(Icons.lock),
+                        contentPadding: EdgeInsets.only(top: 10, bottom: 10),
                         labelText: 'Password',
                         hintText: 'Enter your password',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50.0),
-                          ),
-                        ),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
@@ -172,7 +164,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {},
-                    child: Text('Register'),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Register',
+                          textScaleFactor: 1.2,
+                        ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        Icon(
+                          Icons.send_rounded,
+                          size: 19,
+                        ),
+                      ],
+                    ),
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xFF004194),
                       minimumSize: const Size(double.infinity, 40),
@@ -183,6 +190,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Divider(
+                    thickness: 0.5,
+                    color: Colors.black,
+                  ),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Already have an account?'),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text('Log in'),
+                      ),
+                    ],
                   ),
                 ],
               ),
