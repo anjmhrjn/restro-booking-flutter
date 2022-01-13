@@ -26,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Center(
                     child: Text(
-                      'Sign Up',
+                      'SIGN UP',
                       style: TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        icon: Icon(Icons.person),
+                        prefixIcon: Icon(Icons.person),
                         contentPadding: EdgeInsets.only(top: 10, bottom: 10),
                         labelText: 'Username',
                         hintText: 'Enter your username',
@@ -85,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.email),
+                        prefixIcon: Icon(Icons.email),
                         contentPadding: EdgeInsets.only(top: 10, bottom: 10),
                         labelText: 'Email',
                         hintText: 'Enter your email',
@@ -122,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }).toList(),
                       onChanged: (value) {},
                       decoration: InputDecoration(
-                        icon: Icon(Icons.group),
+                        prefixIcon: Icon(Icons.group),
                         contentPadding: EdgeInsets.only(top: 10, bottom: 10),
                         hintText: 'User Type',
                         border: InputBorder.none,
@@ -151,7 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: TextFormField(
                       obscureText: true,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
+                        prefixIcon: Icon(Icons.lock),
                         contentPadding: EdgeInsets.only(top: 10, bottom: 10),
                         labelText: 'Password',
                         hintText: 'Enter your password',

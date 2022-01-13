@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restro_booking/screen/login.dart';
 import 'package:restro_booking/screen/register.dart';
 
 void main() {
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: RegisterScreen(),
+      // home: RegisterScreen(),
+      home: LoginScreen(),
     );
   }
 }
