@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restro_booking/screen/book.dart';
 import 'package:restro_booking/screen/login.dart';
+import 'package:restro_booking/screen/menuList.dart';
 import 'package:restro_booking/screen/register.dart';
 
 void main() {
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // home: RegisterScreen(),
       // home: LoginScreen(),
-      home: BookTable(),
+      // home: BookTable(),
+      home: MenuItems(),
     );
   }
 }

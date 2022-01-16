@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restro_booking/screen/getTablesForm.dart';
-import 'package:restro_booking/screen/info.dart';
+import 'package:restro_booking/model/info.dart';
 import 'package:date_field/date_field.dart';
 
 class BookTable extends StatefulWidget {
