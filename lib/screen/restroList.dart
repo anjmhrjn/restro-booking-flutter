@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:restro_booking/model/info.dart';
 import 'package:restro_booking/model/menu.dart';
+import 'package:restro_booking/model/restrodetails.dart';
 
 class RestroLists extends StatefulWidget {
   const RestroLists({Key? key}) : super(key: key);
@@ -9,9 +11,9 @@ class RestroLists extends StatefulWidget {
 }
 
 class _RestroListsState extends State<RestroLists> {
-  Widget menuCard(BuildContext context, Menu menuItem) {
+  Widget menuCard(BuildContext context, RestroDetails restrodetail) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 15),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -24,35 +26,63 @@ class _RestroListsState extends State<RestroLists> {
           ),
           child: ListTile(
             leading: CircleAvatar(
-              backgroundImage: AssetImage(menuItem.image![0]),
+              backgroundImage: AssetImage(restrodetail.image!),
               radius: 25,
             ),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    '${menuItem.name}',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xFF041838),
-                    ),
+                Text(
+                  '${restrodetail.name}',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFF041838),
                   ),
                 ),
-                Text(
-                  '${menuItem.desc}',
-                  style: TextStyle(
-                    color: Color(0xFFACC9DC),
+                SizedBox(
+                  height: 25,
+                  child: ListView.builder(
+                    itemCount: restrodetail.tags!.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Row(
+                          children: [
+                            Text(
+                              restrodetail.tags![index],
+                              style: TextStyle(
+                                color: Color(0xFFACC9DC),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            )
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
             ),
-            trailing: Text(
-              'NRs. ${menuItem.price}',
-              style: TextStyle(
-                color: Color(0xFF041838),
-              ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Color(0xFFEE6A3E),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  '${restrodetail.rating}',
+                  style: TextStyle(
+                    color: Color(0xFF041838),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -69,31 +99,31 @@ class _RestroListsState extends State<RestroLists> {
       "Desert"
     ];
 
-    List<Menu> menuList = [
-      Menu(
-        name: 'Veg roll',
-        desc: '5pcs, Paneer, Onions',
-        image: ['images/snacks.jpg'],
-        price: 150,
+    List<RestroDetails> menuList = [
+      RestroDetails(
+        name: "MacLaren's",
+        tags: ["Cafe", "Bar"],
+        rating: 4.3,
+        image: "images/snacks.jpg",
       ),
-      Menu(
-        name: 'Aaloo Nazakat',
-        desc: '5pcs, Paneer, Onions',
-        image: ['images/snacks.jpg'],
-        price: 150,
+      RestroDetails(
+        name: "Central Perk",
+        tags: ["Cafe", "Bar"],
+        rating: 4.3,
+        image: "images/snacks.jpg",
       ),
-      Menu(
-        name: 'Just Tadka',
-        desc: '5pcs, Paneer, Onions',
-        image: ['images/snacks.jpg'],
-        price: 150,
+      RestroDetails(
+        name: "Namaste Bar",
+        tags: ["Cafe", "Bar"],
+        rating: 4.3,
+        image: "images/snacks.jpg",
       ),
-      Menu(
-        name: 'Mithoo',
-        desc: '5pcs, Paneer, Onions',
-        image: ['images/snacks.jpg'],
-        price: 150,
-      ),
+      RestroDetails(
+        name: "Puzzles Bar",
+        tags: ["Cafe", "Bar"],
+        rating: 4.3,
+        image: "images/snacks.jpg",
+      )
     ];
 
     return Scaffold(
@@ -130,108 +160,57 @@ class _RestroListsState extends State<RestroLists> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 20,
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        left: 20,
+                        right: 20,
+                        bottom: 20,
                       ),
-                      child: Card(
-                        child: ListTile(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 0,
-                            horizontal: 16,
-                          ),
-                          dense: true,
-                          leading: Icon(Icons.search),
-                          title: Form(
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Search',
+                      child: Container(
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEE6A3E),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Form(
+                          child: TextFormField(
+                            style: TextStyle(
+                              color: Color(0xFFF6F2EC),
+                            ),
+                            decoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                color: Color(0xFFF6F2EC),
+                              ),
+                              fillColor: Color(0xFFEE6A3E),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Color(0xFFEE6A3E),
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 0,
+                                horizontal: 10,
+                              ),
+                              hintText: 'Search',
+                              prefixIcon: Icon(
+                                Icons.search,
+                                size: 18,
+                                color: Color(0xFFF6F2EC),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                    Row(
-                      children: const [
-                        Icon(
-                          Icons.location_on,
-                          color: Color(0xFFF6F2EC),
-                          size: 23,
-                        ),
-                        Text(
-                          'Jhamsikhel, Lalitpur',
-                          style: TextStyle(
-                            color: Color(0xFFF6F2EC),
-                            fontStyle: FontStyle.italic,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      thickness: 1,
-                      color: Color(0xFFACC9DC),
-                    ),
-                    SizedBox(
-                      height: 55,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 5,
-                          left: 20,
-                          right: 20,
-                          bottom: 20,
-                        ),
-                        child: ListView.builder(
-                          itemCount: category_list.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color(0xFFACC9DC),
-                                  // minimumSize: const Size(double.infinity, 40),
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                  ),
-
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10.0),
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: Text(
-                                  category_list[index],
-                                  style: TextStyle(
-                                    color: Color(0xFF041838),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
               SizedBox(
                 height: 20,
-              ),
-              Text(
-                'Menu',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 23,
-                  color: Color(0xFFEE6A3E),
-                ),
-              ),
-              SizedBox(
-                height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.only(
