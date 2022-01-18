@@ -5,6 +5,8 @@ import 'package:restro_booking/screen/menuList.dart';
 import 'package:restro_booking/screen/register.dart';
 import 'package:restro_booking/screen/restroList.dart';
 import 'package:restro_booking/screen/restro_profile.dart';
+import 'package:restro_booking/screen/table_add.dart';
+import 'package:restro_booking/screen/table_bulk.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +23,9 @@ class MyApp extends StatelessWidget {
       // home: BookTable(),
       // home: MenuItems(),
       // home: RestroLists(),
-      home: RestroProfile(),
+      // home: RestroProfile(),
+      // home: TableAdd(),
+      home: TableBulkAdd(),
     );
   }
 }
