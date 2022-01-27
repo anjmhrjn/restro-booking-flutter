@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restro_booking/model/userDetails.dart';
+import 'package:restro_booking/model/userModel.dart';
+import 'package:restro_booking/providers/auth_provider.dart';
+import 'package:restro_booking/providers/user_provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -8,8 +13,16 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final formkey = GlobalKey<FormState>();
+  String username = '';
+  String email = '';
+  String user_type = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
+    AuthProvider auth = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       backgroundColor: Color(0xFFF6F2EC),
       // appBar: AppBar(
@@ -22,6 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             child: Form(
+              key: formkey,
               child: Column(
                 children: [
                   Center(
@@ -54,6 +68,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ],
                     ),
                     child: TextFormField(
+                      onSaved: (value) {
+                        username = value!;
+                      },
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.person),
                         contentPadding: EdgeInsets.only(top: 10, bottom: 10),
@@ -83,6 +100,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ],
                     ),
                     child: TextFormField(
+                      onSaved: (value) {
+                        email = value!;
+                      },
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.email),
@@ -120,7 +140,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Text(value),
                         );
                       }).toList(),
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        user_type = value.toString();
+                      },
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.group),
                         contentPadding: EdgeInsets.only(top: 10, bottom: 10),
@@ -150,6 +172,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     child: TextFormField(
                       obscureText: true,
+                      onSaved: (value) {
+                        password = value!;
+                      },
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.lock),
                         contentPadding: EdgeInsets.only(top: 10, bottom: 10),
@@ -162,8 +187,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     height: 30,
                   ),
+                  // auth.loggedInStatus == Status.Authenticating ?
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (formkey.currentState!.validate()) {
+                        formkey.currentState!.save();
+                        User u = User(
+                          username: username,
+                          password: password,
+                          email: email,
+                          user_type: user_type,
+                        );
+
+                        auth.register(u).then((response) {
+                          if (response['status']) {
+                            print("Registered");
+                            UserDetails user = response['data'];
+                            Provider.of<UserProvider>(
+                              context,
+                              listen: false,
+                            ).setUser(user);
+                            Navigator.pushReplacementNamed(context, '/login');
+                          }
+                        });
+                      }
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [

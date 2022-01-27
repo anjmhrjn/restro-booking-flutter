@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restro_booking/providers/auth_provider.dart';
+import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/book.dart';
 import 'package:restro_booking/screen/login.dart';
 import 'package:restro_booking/screen/menuList.dart';
@@ -17,15 +20,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // home: RegisterScreen(),
-      // home: LoginScreen(),
-      // home: BookTable(),
-      // home: MenuItems(),
-      // home: RestroLists(),
-      // home: RestroProfile(),
-      // home: TableAdd(),
-      home: TableBulkAdd(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider())
+      ],
+      child: MaterialApp(
+        initialRoute: '/login',
+        routes: {
+          '/login': (context) => LoginScreen(),
+          '/register': (context) => RegisterScreen(),
+          '/addTable': (context) => TableAdd(),
+        },
+        // home: RegisterScreen(),
+        // home: LoginScreen(),
+        // home: BookTable(),
+        // home: MenuItems(),
+        // home: RestroLists(),
+        // home: RestroProfile(),
+        // home: TableAdd(),
+        // home: TableBulkAdd(),
+      ),
     );
   }
 }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restro_booking/model/userDetails.dart';
+import 'package:restro_booking/providers/auth_provider.dart';
+import 'package:restro_booking/providers/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -8,13 +12,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String username = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
+    AuthProvider auth = Provider.of<AuthProvider>(context);
     return Scaffold(
       backgroundColor: Color(0xFFF6F2EC),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 Container(
@@ -67,6 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         child: TextFormField(
+                          onSaved: (value) {
+                            username = value!;
+                          },
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person),
                             contentPadding: EdgeInsets.only(
@@ -100,6 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         child: TextFormField(
+                          onSaved: (value) {
+                            password = value!;
+                          },
                           obscureText: true,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.lock),
@@ -117,7 +133,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 30,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            final Future<Map<String, dynamic>> response =
+                                auth.login(username, password);
+                            response.then((response) {
+                              if (response['status']) {
+                                UserDetails user = response['user'];
+                                Provider.of<UserProvider>(
+                                  context,
+                                  listen: false,
+                                ).setUser(user);
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  '/addTable',
+                                );
+                              }
+                            });
+                          }
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
@@ -163,7 +198,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 3,
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/register');
+                            },
                             child: Text('Sign up'),
                           ),
                         ],
