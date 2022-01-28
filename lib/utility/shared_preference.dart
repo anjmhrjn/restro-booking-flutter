@@ -8,9 +8,9 @@ class UserPreferences {
     prefs.setInt('userId', user.userId!);
     prefs.setString('username', user.username!);
     prefs.setString('email', user.email!);
-    prefs.setString('name', user.name!);
     prefs.setString('user_type', user.user_type!);
     prefs.setString('token', user.token!);
+    prefs.setBool('isAuthenticated', true);
 
     return prefs.commit();
   }
@@ -21,15 +21,14 @@ class UserPreferences {
     int? userId = prefs.getInt('userId');
     String? username = prefs.getString('username');
     String? email = prefs.getString('email');
-    String? name = prefs.getString('name');
     String? user_type = prefs.getString('username');
     String? token = prefs.getString('token');
+    bool? isAuthenticated = prefs.getBool('isAuthenticated');
 
     return UserDetails(
       userId: userId,
       username: username,
       email: email,
-      name: name,
       user_type: user_type,
       token: token,
     );
@@ -41,9 +40,9 @@ class UserPreferences {
     prefs.remove('userId');
     prefs.remove('username');
     prefs.remove('email');
-    prefs.remove('name');
     prefs.remove('user_type');
     prefs.remove('token');
+    prefs.remove('isAuthenticated');
   }
 
   Future<String> getToken() async {
@@ -53,6 +52,16 @@ class UserPreferences {
       return token;
     } else {
       return '';
+    }
+  }
+
+  Future<bool> getAuthenticatedStatus() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? isAuthenticated = prefs.getBool('isAuthenticated');
+    if (isAuthenticated != null) {
+      return isAuthenticated;
+    } else {
+      return false;
     }
   }
 }

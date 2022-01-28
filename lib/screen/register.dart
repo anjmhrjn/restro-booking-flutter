@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:restro_booking/model/userDetails.dart';
 import 'package:restro_booking/model/userModel.dart';
@@ -201,13 +202,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                         auth.register(u).then((response) {
                           if (response['status']) {
-                            print("Registered");
-                            UserDetails user = response['data'];
-                            Provider.of<UserProvider>(
-                              context,
-                              listen: false,
-                            ).setUser(user);
-                            Navigator.pushReplacementNamed(context, '/login');
+                            MotionToast.success(
+                              description: Text(
+                                response['message'],
+                              ),
+                            ).show(context);
+                            formkey.currentState!.reset();
+                            // print(response['data']);
+                            // UserDetails user = response['data'];
+                            // Provider.of<UserProvider>(
+                            //   context,
+                            //   listen: false,
+                            // ).setUser(user);
+                            // Navigator.pushReplacementNamed(context, '/login');
+                          } else {
+                            MotionToast.error(
+                              description: Text(response['message']),
+                            ).show(context);
                           }
                         });
                       }
@@ -257,7 +268,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: 3,
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/login');
+                        },
                         child: Text('Log in'),
                       ),
                     ],

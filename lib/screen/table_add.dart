@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restro_booking/providers/user_provider.dart';
 
 class TableAdd extends StatefulWidget {
   const TableAdd({Key? key}) : super(key: key);
@@ -9,7 +11,15 @@ class TableAdd extends StatefulWidget {
 
 class _TableAddState extends State<TableAdd> {
   @override
+  void initState() {
+    super.initState();
+    final usrMdl = Provider.of<UserProvider>(context, listen: false);
+    usrMdl.user;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final usrMdl = Provider.of<UserProvider>(context);
     return Scaffold(
       backgroundColor: Color(0xFFF6F2EC),
       body: SafeArea(
@@ -123,7 +133,9 @@ class _TableAddState extends State<TableAdd> {
                     height: 20,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      print(usrMdl.user.username);
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [

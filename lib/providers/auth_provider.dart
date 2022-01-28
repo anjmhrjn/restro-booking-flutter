@@ -60,22 +60,20 @@ class AuthProvider extends ChangeNotifier {
     print(responseData);
 
     if (response.statusCode == 200) {
-      var userData = responseData['data'];
+      // var userData = responseData['data'];
 
-      UserDetails authUser = UserDetails.fromJson(responseData);
+      // UserDetails authUser = UserDetails.fromJson(responseData);
 
-      UserPreferences().saveUser(authUser);
+      // UserPreferences().saveUser(authUser);
 
       result = {
         'status': true,
         'message': 'Successfully registered',
-        'data': authUser
       };
     } else {
       result = {
         'status': false,
-        'message': 'Registration failed',
-        'data': responseData
+        'message': responseData['message'],
       };
     }
     return result;
@@ -85,10 +83,10 @@ class AuthProvider extends ChangeNotifier {
     var result;
 
     final Map<String, dynamic> loginData = {
-      'UserName': username,
-      'Password': password
+      'username': username,
+      'password': password
     };
-
+    print(loginData);
     _loggedInStatus = Status.Authenticating;
     notifyListeners();
 
@@ -107,7 +105,7 @@ class AuthProvider extends ChangeNotifier {
 
       print(responseData);
 
-      var userData = responseData['Content'];
+      var userData = responseData['userdetails'];
 
       UserDetails authUser = UserDetails.fromJson(userData);
 
@@ -126,7 +124,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['message']
       };
     }
 
