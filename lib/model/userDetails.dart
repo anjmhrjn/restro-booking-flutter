@@ -1,7 +1,7 @@
 import 'package:restro_booking/model/userModel.dart';
 
 class UserDetails {
-  int? userId;
+  String? userId;
   String? username;
   String? email;
   String? user_type;
@@ -17,7 +17,7 @@ class UserDetails {
 
   factory UserDetails.fromJson(Map<String, dynamic> responseData) {
     return UserDetails(
-      userId: responseData['id'],
+      userId: responseData['userId'],
       username: responseData['username'],
       email: responseData['email'],
       user_type: responseData['user_type'],

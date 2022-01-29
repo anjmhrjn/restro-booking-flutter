@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
+import 'package:restro_booking/model/tableModel.dart';
+import 'package:restro_booking/providers/table_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 
 class TableAdd extends StatefulWidget {
@@ -10,16 +13,21 @@ class TableAdd extends StatefulWidget {
 }
 
 class _TableAddState extends State<TableAdd> {
-  @override
-  void initState() {
-    super.initState();
-    final usrMdl = Provider.of<UserProvider>(context, listen: false);
-    usrMdl.user;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   final usrMdl = Provider.of<UserProvider>(context, listen: false);
+  //   usrMdl.user;
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final formkey = GlobalKey<FormState>();
+    String min_capacity = '';
+    String max_capacity = '';
+    String table_no = '';
     final usrMdl = Provider.of<UserProvider>(context);
+    TableProvider tbMdl = Provider.of<TableProvider>(context);
     return Scaffold(
       backgroundColor: Color(0xFFF6F2EC),
       body: SafeArea(
@@ -27,6 +35,7 @@ class _TableAddState extends State<TableAdd> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Form(
+              key: formkey,
               child: Column(
                 children: [
                   Text(
@@ -55,6 +64,9 @@ class _TableAddState extends State<TableAdd> {
                     height: 20,
                   ),
                   TextFormField(
+                    onSaved: (value) {
+                      min_capacity = value!;
+                    },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
@@ -81,6 +93,9 @@ class _TableAddState extends State<TableAdd> {
                     height: 20,
                   ),
                   TextFormField(
+                    onSaved: (value) {
+                      max_capacity = value!;
+                    },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
@@ -107,6 +122,9 @@ class _TableAddState extends State<TableAdd> {
                     height: 20,
                   ),
                   TextFormField(
+                    onSaved: (value) {
+                      table_no = value!;
+                    },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
@@ -133,8 +151,31 @@ class _TableAddState extends State<TableAdd> {
                     height: 20,
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      print(usrMdl.user.username);
+                    onPressed: () async {
+                      if (formkey.currentState!.validate()) {
+                        formkey.currentState!.save();
+                        String token = usrMdl.user.token!;
+                        String userId = usrMdl.user.userId!;
+
+                        TableModel tm = TableModel(
+                          min_capacity: min_capacity,
+                          max_capacity: max_capacity,
+                          table_number: table_no,
+                          is_available: true,
+                          tableOf: userId,
+                        );
+                        final bool response = await tbMdl.addTable(tm, token);
+                        if (response) {
+                          formkey.currentState!.reset();
+                          MotionToast.success(
+                            description: Text('New Table Added'),
+                          ).show(context);
+                        } else {
+                          MotionToast.error(
+                            description: Text('Error in adding table'),
+                          ).show(context);
+                        }
+                      }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

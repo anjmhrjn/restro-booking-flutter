@@ -141,9 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 auth.login(username, password);
                             response.then((response) {
                               if (response['status']) {
-                                MotionToast.success(
-                                  description: Text('Loggin you in!'),
-                                ).show(context);
                                 UserDetails user = response['user'];
                                 Provider.of<UserProvider>(
                                   context,
@@ -153,6 +150,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context,
                                   '/addTable',
                                 );
+                                MotionToast.success(
+                                  description: Text('Log in Success!'),
+                                ).show(context);
                               } else {
                                 MotionToast.error(
                                   description: Text(response['message']),

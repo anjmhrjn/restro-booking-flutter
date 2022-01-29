@@ -5,7 +5,7 @@ class UserPreferences {
   Future<bool> saveUser(UserDetails user) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setInt('userId', user.userId!);
+    prefs.setString('userId', user.userId!);
     prefs.setString('username', user.username!);
     prefs.setString('email', user.email!);
     prefs.setString('user_type', user.user_type!);
@@ -18,7 +18,7 @@ class UserPreferences {
   Future<UserDetails> getUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    int? userId = prefs.getInt('userId');
+    String? userId = prefs.getString('userId');
     String? username = prefs.getString('username');
     String? email = prefs.getString('email');
     String? user_type = prefs.getString('username');

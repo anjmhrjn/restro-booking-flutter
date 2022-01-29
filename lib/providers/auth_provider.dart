@@ -45,7 +45,6 @@ class AuthProvider extends ChangeNotifier {
     return await post(
       Uri.parse(AppUrl.register),
       body: userMap,
-      // headers: {'Content-Type': 'application/json'},
     ).then(onValue).catchError(onError);
   }
 
@@ -57,15 +56,8 @@ class AuthProvider extends ChangeNotifier {
     Map<String, dynamic> result;
 
     final Map<String, dynamic> responseData = json.decode(response.body);
-    print(responseData);
 
     if (response.statusCode == 200) {
-      // var userData = responseData['data'];
-
-      // UserDetails authUser = UserDetails.fromJson(responseData);
-
-      // UserPreferences().saveUser(authUser);
-
       result = {
         'status': true,
         'message': 'Successfully registered',
@@ -86,7 +78,6 @@ class AuthProvider extends ChangeNotifier {
       'username': username,
       'password': password
     };
-    print(loginData);
     _loggedInStatus = Status.Authenticating;
     notifyListeners();
 
@@ -102,8 +93,6 @@ class AuthProvider extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
-
-      print(responseData);
 
       var userData = responseData['userdetails'];
 

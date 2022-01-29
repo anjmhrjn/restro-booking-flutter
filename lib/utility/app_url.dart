@@ -3,4 +3,6 @@ class AppUrl {
 
   static const String login = baseUrl + '/user/login';
   static const String register = baseUrl + '/user/register';
+  static const String tableAdd = baseUrl + '/table/add';
+  static const String myTables = baseUrl + '/table/user/';
 }
