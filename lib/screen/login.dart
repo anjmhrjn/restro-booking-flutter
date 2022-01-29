@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ).setUser(user);
                                 Navigator.pushReplacementNamed(
                                   context,
-                                  '/addTable',
+                                  '/dashboard',
                                 );
                                 MotionToast.success(
                                   description: Text('Log in Success!'),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:restro_booking/model/tableModel.dart';
 import 'package:restro_booking/providers/table_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
+import 'package:restro_booking/screen/bottomNavBar.dart';
 
 class TableAdd extends StatefulWidget {
   const TableAdd({Key? key}) : super(key: key);
@@ -210,6 +211,7 @@ class _TableAddState extends State<TableAdd> {
           ),
         ),
       ),
+      bottomNavigationBar: getBusinessBottomNavBar(context),
     );
   }
 }

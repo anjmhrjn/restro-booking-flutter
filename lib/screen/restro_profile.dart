@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bordered_text/bordered_text.dart';
+import 'package:restro_booking/screen/bottomNavBar.dart';
 
 class RestroProfile extends StatelessWidget {
   const RestroProfile({Key? key}) : super(key: key);
@@ -244,6 +245,7 @@ class RestroProfile extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: getBusinessBottomNavBar(context),
     );
   }
 }

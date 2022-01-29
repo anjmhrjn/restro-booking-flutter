@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restro_booking/model/info.dart';
 import 'package:restro_booking/model/menu.dart';
 import 'package:restro_booking/model/restrodetails.dart';
+import 'package:restro_booking/screen/bottomNavBar.dart';
 
 class RestroLists extends StatefulWidget {
   const RestroLists({Key? key}) : super(key: key);
@@ -231,6 +232,7 @@ class _RestroListsState extends State<RestroLists> {
           ),
         ),
       ),
+      bottomNavigationBar: getBusinessBottomNavBar(context),
     );
   }
 }
