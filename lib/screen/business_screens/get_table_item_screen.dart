@@ -15,7 +15,9 @@ Widget getTableItemScreen(context, Map<String, dynamic> attributes) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, attributes['addBtnRoute']);
+                    },
                     icon: Icon(Icons.add),
                     label: Text(
                       attributes['addBtnText'],
@@ -36,7 +38,9 @@ Widget getTableItemScreen(context, Map<String, dynamic> attributes) {
                     height: 25,
                   ),
                   ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, attributes['viewBtnRoute']);
+                    },
                     icon: Icon(Icons.remove_red_eye_rounded),
                     label: Text(
                       attributes['viewBtnText'],

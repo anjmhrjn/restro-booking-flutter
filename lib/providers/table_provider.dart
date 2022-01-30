@@ -49,9 +49,10 @@ class TableProvider extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         TableModel item;
-        var tableRes = jsonDecode(response.body) as Map;
-        for (var i = 0; i < tableRes.length; i++) {
-          item = TableModel.fromJson(tableRes[i]);
+        Iterable l = json.decode(response.body);
+        var i = 0;
+        for (var m in l) {
+          item = TableModel.fromJson(m);
           result.add(item);
         }
       }

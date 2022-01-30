@@ -10,7 +10,9 @@ class TableScreen extends StatelessWidget {
       context,
       {
         "addBtnText": "Add New Table",
+        "addBtnRoute": "/addTable",
         "viewBtnText": "View My Tables",
+        "viewBtnRoute": "/my-tables",
       },
     );
   }

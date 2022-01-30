@@ -5,6 +5,7 @@ import 'package:restro_booking/providers/btmnavigation_provider.dart';
 import 'package:restro_booking/providers/table_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/book.dart';
+import 'package:restro_booking/screen/business_screens/myTables.dart';
 import 'package:restro_booking/screen/dashboard.dart';
 import 'package:restro_booking/screen/business_screens/itemScreen.dart';
 import 'package:restro_booking/screen/business_screens/table_add.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
           '/table-screen': (context) => TableScreen(),
           '/item-screen': (context) => ItemScreen(),
           '/dashboard': (context) => UserDashboard(),
+          '/my-tables': (context) => MyTableScreen(),
         },
         // home: RegisterScreen(),
         // home: LoginScreen(),
