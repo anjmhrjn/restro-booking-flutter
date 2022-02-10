@@ -1,9 +1,12 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restro_booking/model/table_model.dart';
 import 'package:restro_booking/providers/table_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/bottomNavBar.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 class MyTableScreen extends StatefulWidget {
   const MyTableScreen({Key? key}) : super(key: key);
@@ -13,77 +16,110 @@ class MyTableScreen extends StatefulWidget {
 }
 
 class _MyTableScreenState extends State<MyTableScreen> {
-  List<TableModel> tblData = [];
+  late Future<List<TableModel>> tblData;
   @override
   void initState() {
     super.initState();
     final tblMdl = Provider.of<TableProvider>(context, listen: false);
     final usrMdl = Provider.of<UserProvider>(context, listen: false);
-    tblMdl.getMyTables(usrMdl.user.userId, usrMdl.user.token);
+    tblData = tblMdl.getMyTablesData(usrMdl.user.userId, usrMdl.user.token);
   }
 
-  final Future<String> _calculation = Future<String>.delayed(
-    const Duration(seconds: 2),
-    () => 'Data Loaded',
-  );
+  Future<bool> delTable(tableId) async {
+    final tblMdl = Provider.of<TableProvider>(context, listen: false);
+    final usrMdl = Provider.of<UserProvider>(context, listen: false);
+    final result = await tblMdl.deleteTable(tableId, usrMdl.user.token);
+    return result;
+  }
 
-  Widget getFutureWidget() {
-    return (FutureBuilder(
-      future: _calculation,
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        List<Widget> children;
-        if (snapshot.hasData) {
-          children = [
-            const Icon(
-              Icons.check_circle_outline,
-              color: Colors.green,
-              size: 60,
+  Widget createCard(table) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 25),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 5,
+        color: Color(0xFFF6F2EC),
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: ListTile(
+            leading: Icon(
+              Icons.table_chart_rounded,
+              size: 50,
+              color: Color(0xFFEE6A3E),
             ),
-          ];
-        } else if (snapshot.hasError) {
-          children = <Widget>[
-            const Icon(
-              Icons.error_outline,
-              color: Colors.red,
-              size: 60,
+            title: Column(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Table Number: ${table.table_number}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text('Minimum Capacity: ${table.min_capacity}'),
+                SizedBox(
+                  height: 5,
+                ),
+                Text('Maximum Capacity: ${table.max_capacity}'),
+                SizedBox(
+                  height: 5,
+                ),
+                Text('Available: ${table.is_available}')
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Text('Result: ${snapshot.data}'),
+            subtitle: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    tooltip: 'Update Table',
+                    onPressed: () {},
+                    color: Color(0xFF004194),
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      var deleted = await delTable(table.id);
+                      if (deleted) {
+                        MotionToast.success(
+                          description: Text('Table Deleted'),
+                        ).show(context);
+                      } else {
+                        MotionToast.error(
+                          description: Text('Error in deleting table'),
+                        ).show(context);
+                      }
+                    },
+                    icon: Icon(Icons.delete),
+                    tooltip: 'Delete Table',
+                    color: Colors.red,
+                  ),
+                ],
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Text('Error: ${snapshot.error}'),
-            )
-          ];
-        } else {
-          children = const <Widget>[
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: CircularProgressIndicator(),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: Text('Awaiting result...'),
-            )
-          ];
-        }
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: children,
           ),
-        );
-      },
-    ));
+        ),
+      ),
+    );
+  }
+
+  Future<List<TableModel>> getTableData() async {
+    final tblMdl = Provider.of<TableProvider>(context, listen: false);
+    final usrMdl = Provider.of<UserProvider>(context, listen: false);
+    var tableData = await tblMdl.getMyTablesData(
+      usrMdl.user.userId,
+      usrMdl.user.token,
+    );
+    return tableData;
   }
 
   @override
   Widget build(BuildContext context) {
-    final tblMdl = Provider.of<TableProvider>(context, listen: false);
-    final usrMdl = Provider.of<UserProvider>(context, listen: false);
-    tblMdl.getMyTables(usrMdl.user.userId, usrMdl.user.token);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -130,16 +166,26 @@ class _MyTableScreenState extends State<MyTableScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 15,
+                  horizontal: 25,
                 ),
-                child: getFutureWidget(),
+                child: FutureBuilder<List<TableModel>>(
+                  future: tblData,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return createCard(snapshot.data![index]);
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                    return const CircularProgressIndicator();
+                  },
+                ),
               ),
-              Consumer<TableProvider>(
-                builder: (context, tbl, child) {
-                  print("Table: ${tbl.table}");
-                  return Text('hello');
-                },
-              )
             ],
           ),
         ),

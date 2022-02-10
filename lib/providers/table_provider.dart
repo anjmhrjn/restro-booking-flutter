@@ -62,6 +62,25 @@ class TableProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> deleteTable(tableId, token) async {
+    String tok = 'Bearer $token';
+    try {
+      final response = await delete(
+        Uri.parse(AppUrl.deleteTable + tableId + "/"),
+        headers: {
+          'Authorization': tok,
+        },
+      );
+      if (response.statusCode == 204) {
+        _table.removeWhere((element) => element.id == tableId);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
   getMyTables(userId, token) async {
     _table = await getMyTablesData(userId, token);
     notifyListeners();
