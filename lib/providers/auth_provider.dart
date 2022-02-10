@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:restro_booking/model/userDetails.dart';
-import 'package:restro_booking/model/userModel.dart';
+import 'package:restro_booking/model/user_model.dart';
 import 'package:restro_booking/utility/app_url.dart';
 import 'package:http/http.dart';
 import 'package:restro_booking/utility/shared_preference.dart';

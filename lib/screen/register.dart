@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:restro_booking/model/userDetails.dart';
-import 'package:restro_booking/model/userModel.dart';
+import 'package:restro_booking/model/user_model.dart';
 import 'package:restro_booking/providers/auth_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 

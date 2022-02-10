@@ -1,4 +1,4 @@
-import 'package:restro_booking/model/userModel.dart';
+import 'package:restro_booking/model/user_model.dart';
 
 class UserDetails {
   String? userId;

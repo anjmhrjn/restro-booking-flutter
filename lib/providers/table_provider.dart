@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:restro_booking/model/tableModel.dart';
+import 'package:restro_booking/model/table_model.dart';
 import 'package:restro_booking/utility/app_url.dart';
 
 class TableProvider extends ChangeNotifier {

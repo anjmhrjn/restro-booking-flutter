@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'table_model.g.dart';
+
+@JsonSerializable()
 class TableModel {
   final String id;
   final String? min_capacity;
