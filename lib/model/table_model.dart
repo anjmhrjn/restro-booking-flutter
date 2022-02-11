@@ -7,7 +7,7 @@ class TableModel {
   final String id;
   final String? min_capacity;
   final String? max_capacity;
-  final bool? is_available;
+  late final bool? is_available;
   final String? table_number;
   final String? tableOf;
 
@@ -19,6 +19,10 @@ class TableModel {
     this.table_number,
     this.tableOf,
   });
+
+  void setIsAvailable(bool value) {
+    is_available = value;
+  }
 
   factory TableModel.fromJson(Map<String, dynamic> json) {
     return TableModel(

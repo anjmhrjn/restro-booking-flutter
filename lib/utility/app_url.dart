@@ -6,4 +6,5 @@ class AppUrl {
   static const String tableAdd = baseUrl + '/table/add';
   static const String myTables = baseUrl + '/table/user/';
   static const String deleteTable = baseUrl + '/table/delete/';
+  static const String updateTable = baseUrl + '/table/update/';
 }

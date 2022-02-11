@@ -16,14 +16,12 @@ class MyTableScreen extends StatefulWidget {
 }
 
 class _MyTableScreenState extends State<MyTableScreen> {
-  late Future<List<TableModel>> tblData;
   @override
   void initState() {
     super.initState();
     final tblMdl = Provider.of<TableProvider>(context, listen: false);
     final usrMdl = Provider.of<UserProvider>(context, listen: false);
     tblMdl.getMyTables(usrMdl.user.userId, usrMdl.user.token);
-    tblData = tblMdl.getMyTablesData(usrMdl.user.userId, usrMdl.user.token);
   }
 
   Future<bool> delTable(tableId) async {
@@ -80,7 +78,13 @@ class _MyTableScreenState extends State<MyTableScreen> {
                   IconButton(
                     icon: Icon(Icons.edit),
                     tooltip: 'Update Table',
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/update-table',
+                        arguments: {"id": table.id},
+                      );
+                    },
                     color: Color(0xFF004194),
                   ),
                   IconButton(
@@ -107,16 +111,6 @@ class _MyTableScreenState extends State<MyTableScreen> {
         ),
       ),
     );
-  }
-
-  Future<List<TableModel>> getTableData() async {
-    final tblMdl = Provider.of<TableProvider>(context, listen: false);
-    final usrMdl = Provider.of<UserProvider>(context, listen: false);
-    var tableData = await tblMdl.getMyTablesData(
-      usrMdl.user.userId,
-      usrMdl.user.token,
-    );
-    return tableData;
   }
 
   @override

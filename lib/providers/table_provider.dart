@@ -37,6 +37,40 @@ class TableProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> updateTable(TableModel tableData, String token) async {
+    final Map<String, dynamic> tableMap = {
+      "min_capacity": tableData.min_capacity,
+      "max_capacity": tableData.max_capacity,
+      "table_number": tableData.table_number,
+      "isAvailable": tableData.is_available.toString(),
+      "tableOf": tableData.tableOf,
+    };
+    // String tok = 'Bearer $token';
+    // print(tok);
+    // print(AppUrl.updateTable + tableData.id);
+    // Response response = await put(
+    //   Uri.parse(AppUrl.updateTable + tableData.id),
+    //   body: tableMap,
+    //   headers: {'Authorization': tok},
+    // );
+    try {
+      String tok = 'Bearer $token';
+      Response response = await put(
+        Uri.parse(AppUrl.updateTable + tableData.id),
+        body: tableMap,
+        headers: {'Authorization': tok},
+      );
+      if (response.statusCode == 200) {
+        var tableRes = jsonDecode(response.body) as Map;
+        return tableRes['success'];
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<List<TableModel>> getMyTablesData(userId, token) async {
     List<TableModel> result = [];
     String tok = 'Bearer $token';
@@ -80,6 +114,10 @@ class TableProvider extends ChangeNotifier {
     } catch (e) {
       return false;
     }
+  }
+
+  TableModel findById(String id) {
+    return _table.firstWhere((element) => element.id == id);
   }
 
   getMyTables(userId, token) async {
