@@ -73,6 +73,7 @@ class TableProvider extends ChangeNotifier {
       );
       if (response.statusCode == 204) {
         _table.removeWhere((element) => element.id == tableId);
+        notifyListeners();
         return true;
       }
       return false;

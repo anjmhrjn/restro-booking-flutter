@@ -22,6 +22,7 @@ class _MyTableScreenState extends State<MyTableScreen> {
     super.initState();
     final tblMdl = Provider.of<TableProvider>(context, listen: false);
     final usrMdl = Provider.of<UserProvider>(context, listen: false);
+    tblMdl.getMyTables(usrMdl.user.userId, usrMdl.user.token);
     tblData = tblMdl.getMyTablesData(usrMdl.user.userId, usrMdl.user.token);
   }
 
@@ -168,21 +169,15 @@ class _MyTableScreenState extends State<MyTableScreen> {
                 padding: EdgeInsets.symmetric(
                   horizontal: 25,
                 ),
-                child: FutureBuilder<List<TableModel>>(
-                  future: tblData,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return createCard(snapshot.data![index]);
-                        },
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    }
-                    return const CircularProgressIndicator();
+                child: Consumer<TableProvider>(
+                  builder: (context, value, child) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: value.table.length,
+                      itemBuilder: (context, index) {
+                        return createCard(value.table[index]);
+                      },
+                    );
                   },
                 ),
               ),
