@@ -47,18 +47,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
     CategoryModel(id: '5', name: 'Breakfast'),
   ];
 
-  final _items = _category
-      .map((cat) => MultiSelectItem<CategoryModel>(cat, cat.name!))
-      .toList();
-
-  List<CategoryModel> _selectedCategory = [];
-  final _multiSelectKey = GlobalKey<FormFieldState>();
-
   @override
   void initState() {
     super.initState();
     _image = null;
-    _selectedCategory = _category;
   }
 
   @override
@@ -289,6 +281,26 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/add-category');
+                    },
+                    icon: Icon(Icons.add),
+                    label: Text('Add Category'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF004194),
+                      minimumSize: const Size(double.infinity, 40),
+                      padding: EdgeInsets.all(10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(50),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restro_booking/providers/auth_provider.dart';
 import 'package:restro_booking/providers/btmnavigation_provider.dart';
+import 'package:restro_booking/providers/category_provider.dart';
 import 'package:restro_booking/providers/table_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/book.dart';
+import 'package:restro_booking/screen/business_screens/add_category.dart';
 import 'package:restro_booking/screen/business_screens/add_item.dart';
 import 'package:restro_booking/screen/business_screens/myTables.dart';
 import 'package:restro_booking/screen/business_screens/update_table.dart';
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => TableProvider()),
         ChangeNotifierProvider(create: (_) => BottomNavigationBarProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
       ],
       child: MaterialApp(
         initialRoute: '/login',
@@ -49,6 +52,7 @@ class MyApp extends StatelessWidget {
           '/my-tables': (context) => MyTableScreen(),
           '/update-table': (context) => UpdateTableScreen(),
           '/add-item': (context) => AddItemScreen(),
+          '/add-category': (context) => AddCategoryScreen(),
         },
         // home: RegisterScreen(),
         // home: LoginScreen(),
