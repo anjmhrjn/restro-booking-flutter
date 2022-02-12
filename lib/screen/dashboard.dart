@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restro_booking/model/userDetails.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/bottomNavBar.dart';
+import 'package:restro_booking/utility/shared_preference.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class UserDashboard extends StatelessWidget {
+class UserDashboard extends StatefulWidget {
   const UserDashboard({Key? key}) : super(key: key);
+
+  @override
+  State<UserDashboard> createState() => _UserDashboardState();
+}
+
+class _UserDashboardState extends State<UserDashboard> {
+  getUserDetails() async {
+    final UserDetails usrDetail = await UserPreferences().getUser();
+    final usrMdl = Provider.of<UserProvider>(context, listen: false);
+    usrMdl.setUser(usrDetail);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserDetails();
+  }
 
   @override
   Widget build(BuildContext context) {

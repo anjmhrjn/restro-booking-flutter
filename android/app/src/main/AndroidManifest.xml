@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.restro_booking">
+    <uses-permission android:name="android.permission.CAMERA" />
    <application
         android:label="restro_booking"
         android:name="${applicationName}"

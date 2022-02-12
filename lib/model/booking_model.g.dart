@@ -7,7 +7,7 @@ part of 'booking_model.dart';
 // **************************************************************************
 
 BookingModel _$BookingModelFromJson(Map<String, dynamic> json) => BookingModel(
-      id: json['id'] as String? ?? '',
+      id: json['_id'] as String? ?? '',
       requested_for: json['requested_for'] as String?,
       start_time: json['start_time'] as String?,
       end_time: json['end_time'] as String?,
@@ -19,7 +19,7 @@ BookingModel _$BookingModelFromJson(Map<String, dynamic> json) => BookingModel(
 
 Map<String, dynamic> _$BookingModelToJson(BookingModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'requested_for': instance.requested_for,
       'start_time': instance.start_time,
       'end_time': instance.end_time,

@@ -9,6 +9,7 @@ class ItemScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return getTableItemScreen(context, {
       "addBtnText": "Add New Item",
+      "addBtnRoute": "/add-item",
       "viewBtnText": "View My Items",
     });
   }

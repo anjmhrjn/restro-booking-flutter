@@ -15,6 +15,8 @@ class UserDetails {
     this.token,
   });
 
+  String get getUsername => username!;
+
   factory UserDetails.fromJson(Map<String, dynamic> responseData) {
     return UserDetails(
       userId: responseData['userId'],

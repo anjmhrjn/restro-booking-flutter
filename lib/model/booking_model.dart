@@ -4,6 +4,7 @@ part 'booking_model.g.dart';
 
 @JsonSerializable()
 class BookingModel {
+  @JsonKey(name: '_id')
   final String id;
   final String? requested_for;
   final String? start_time;
