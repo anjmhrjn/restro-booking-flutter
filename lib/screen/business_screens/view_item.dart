@@ -168,7 +168,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
-                        '/update-table',
+                        '/update-item',
                         arguments: {"id": item.id},
                       );
                     },

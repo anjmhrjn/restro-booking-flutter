@@ -10,6 +10,7 @@ import 'package:restro_booking/screen/book.dart';
 import 'package:restro_booking/screen/business_screens/add_category.dart';
 import 'package:restro_booking/screen/business_screens/add_item.dart';
 import 'package:restro_booking/screen/business_screens/myTables.dart';
+import 'package:restro_booking/screen/business_screens/update_item.dart';
 import 'package:restro_booking/screen/business_screens/update_table.dart';
 import 'package:restro_booking/screen/business_screens/view_item.dart';
 import 'package:restro_booking/screen/dashboard.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
           '/add-item': (context) => AddItemScreen(),
           '/add-category': (context) => AddCategoryScreen(),
           '/my-items': (context) => ViewItemScreen(),
+          '/update-item': (context) => UpdateItemScreen(),
         },
         // home: RegisterScreen(),
         // home: LoginScreen(),

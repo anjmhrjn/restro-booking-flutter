@@ -28,7 +28,7 @@ Map<String, dynamic> _$ItemModelToJson(ItemModel instance) => <String, dynamic>{
       '_id': instance.id,
       'name': instance.name,
       'categories': instance.categories,
-      'price': instance.price,
+      'price': instance.price as String,
       'images': instance.images,
       'description': instance.description,
       'itemOf': instance.itemOf,

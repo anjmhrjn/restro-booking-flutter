@@ -77,6 +77,11 @@ class ItemProvider extends ChangeNotifier {
 
   Future<bool> updateItem(ItemModel itemData, String token) async {
     final Map<String, dynamic> itemMap = itemData.toJson();
+    itemMap.remove("_id");
+    itemMap.remove("categories");
+    itemMap.remove("images");
+    itemMap.remove("category_info");
+    itemMap.remove("user_info");
     try {
       String tok = 'Bearer $token';
       Response response = await put(
@@ -110,7 +115,6 @@ class ItemProvider extends ChangeNotifier {
         Iterable l = json.decode(response.body);
         for (var m in l) {
           item = ItemModel.fromJson(m);
-          print(item);
           result.add(item);
         }
       }
