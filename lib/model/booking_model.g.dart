@@ -14,7 +14,13 @@ BookingModel _$BookingModelFromJson(Map<String, dynamic> json) => BookingModel(
       total_seats: json['total_seats'] as String?,
       table: json['table'] as String?,
       user: json['user'] as String?,
-      booking_status: json['booking_status'] as String? ?? '',
+      booking_status: json['booking_status'] as String?,
+      table_detail: json['table_detail'] == null
+          ? null
+          : TableModel.fromJson(json['table_detail'] as Map<String, dynamic>),
+      user_detail: json['user_detail'] == null
+          ? null
+          : User.fromJson(json['user_detail'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$BookingModelToJson(BookingModel instance) =>
@@ -27,4 +33,6 @@ Map<String, dynamic> _$BookingModelToJson(BookingModel instance) =>
       'table': instance.table,
       'user': instance.user,
       'booking_status': instance.booking_status,
+      'table_detail': instance.table_detail,
+      'user_detail': instance.user_detail,
     };

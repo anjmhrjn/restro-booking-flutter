@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:restro_booking/model/table_model.dart';
+import 'package:restro_booking/model/user_model.dart';
 
 part 'booking_model.g.dart';
 
@@ -13,6 +15,8 @@ class BookingModel {
   final String? table;
   final String? user;
   final String? booking_status;
+  final TableModel? table_detail;
+  final User? user_detail;
 
   BookingModel({
     this.id = '',
@@ -22,7 +26,9 @@ class BookingModel {
     this.total_seats,
     this.table,
     this.user,
-    this.booking_status = '',
+    this.booking_status,
+    this.table_detail,
+    this.user_detail,
   });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) =>

@@ -1,8 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:restro_booking/model/category_model.dart';
+import 'package:restro_booking/model/user_model.dart';
 
 part 'item_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ItemModel {
   @JsonKey(name: '_id')
   final String id;
@@ -12,6 +14,8 @@ class ItemModel {
   final String? images;
   final String? description;
   final String? itemOf;
+  final List<CategoryModel>? category_info;
+  final User? user_info;
 
   ItemModel({
     this.id = '',
@@ -21,6 +25,8 @@ class ItemModel {
     this.images,
     this.description,
     this.itemOf,
+    this.category_info,
+    this.user_info,
   });
 
   factory ItemModel.fromJson(Map<String, dynamic> json) =>

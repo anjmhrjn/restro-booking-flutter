@@ -10,4 +10,8 @@ class AppUrl {
   static const String addCategory = baseUrl + '/category/add';
   static const String getCategory = baseUrl + '/all-categories/';
   static const String deleteCategory = baseUrl + '/category/delete/';
+  static const String addItem = baseUrl + '/mobile/item/add';
+  static const String updateItem = baseUrl + '/item/update/';
+  static const String myItems = baseUrl + '/my-items/';
+  static const String deleteItem = baseUrl + '/item/delete/';
 }

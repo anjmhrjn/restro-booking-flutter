@@ -1,0 +1,151 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:restro_booking/model/item_model.dart';
+import 'package:restro_booking/utility/app_url.dart';
+
+class ItemProvider extends ChangeNotifier {
+  List<ItemModel> _item = [];
+
+  List<ItemModel> get item => _item;
+
+  Future<String> uploadImage(String filepath, String id, String token) async {
+    try {
+      String route = '/item/' + id + '/add-item-image/';
+      String url = AppUrl.baseUrl + route;
+      var request = MultipartRequest('PUT', Uri.parse(url));
+      //using the token in the headers
+      request.headers.addAll({
+        'Authorization': 'Bearer $token',
+      });
+      // need a filename
+
+      var ss = filepath.split('/').last;
+      // adding the file in the request
+      request.files.add(
+        MultipartFile(
+          'file',
+          File(filepath).readAsBytes().asStream(),
+          File(filepath).lengthSync(),
+          filename: ss,
+        ),
+      );
+
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      if (response.statusCode == 200) {
+        return 'ok';
+      }
+    } catch (err) {
+      print('$err');
+    }
+    return 'something goes wrong';
+  }
+
+  Future<bool> addItem(ItemModel itemData, String token, File? file) async {
+    String s = '';
+    final itemMap = itemData.toJson();
+    itemMap.removeWhere((key, value) => key == "_id" || key == "images");
+    String tok = 'Bearer $token';
+
+    try {
+      String tok = 'Bearer $token';
+      final response = await post(
+        Uri.parse(AppUrl.addItem),
+        body: itemMap,
+        headers: {'Authorization': tok},
+      );
+      if (response.statusCode == 200) {
+        // if (file != null) {
+        //   var jsonData = jsonDecode(response.body) as Map;
+        //   s = await uploadImage(file.path, jsonData['data']['_id'], token);
+        // }
+        // if (s == 'ok') {
+        //   return true;
+        // }
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> updateItem(ItemModel itemData, String token) async {
+    final Map<String, dynamic> itemMap = itemData.toJson();
+    try {
+      String tok = 'Bearer $token';
+      Response response = await put(
+        Uri.parse(AppUrl.updateItem + itemData.id),
+        body: itemMap,
+        headers: {'Authorization': tok},
+      );
+      if (response.statusCode == 200) {
+        var itemRes = jsonDecode(response.body) as Map;
+        return itemRes['success'];
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<List<ItemModel>> getMyItemsData(token) async {
+    List<ItemModel> result = [];
+    String tok = 'Bearer $token';
+    try {
+      final response = await get(
+        Uri.parse(AppUrl.myItems),
+        headers: {
+          'Authorization': tok,
+        },
+      );
+      if (response.statusCode == 200) {
+        ItemModel item;
+        Iterable l = json.decode(response.body);
+        for (var m in l) {
+          item = ItemModel.fromJson(m);
+          print(item);
+          result.add(item);
+        }
+      }
+      return result;
+    } catch (e) {
+      return result;
+    }
+  }
+
+  Future<bool> deleteItem(itemId, token) async {
+    String tok = 'Bearer $token';
+    try {
+      final response = await delete(
+        Uri.parse(AppUrl.deleteItem + itemId),
+        headers: {
+          'Authorization': tok,
+        },
+      );
+      if (response.statusCode == 204) {
+        _item.removeWhere((element) => element.id == itemId);
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  ItemModel findById(String id) {
+    return _item.firstWhere((element) => element.id == id);
+  }
+
+  getMyItems(token) async {
+    _item = await getMyItemsData(token);
+    notifyListeners();
+  }
+}

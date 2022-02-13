@@ -2,7 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:provider/provider.dart';
 import 'package:restro_booking/model/category_model.dart';
+import 'package:restro_booking/model/item_model.dart';
+import 'package:restro_booking/providers/category_provider.dart';
+import 'package:restro_booking/providers/item_provider.dart';
+import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/bottomNavBar.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:getwidget/getwidget.dart';
@@ -39,22 +45,22 @@ class _AddItemScreenState extends State<AddItemScreen> {
     });
   }
 
-  static List<CategoryModel> _category = [
-    CategoryModel(id: '1', name: 'Snacks'),
-    CategoryModel(id: '2', name: 'Foods'),
-    CategoryModel(id: '3', name: 'Drinks'),
-    CategoryModel(id: '4', name: 'Dessert'),
-    CategoryModel(id: '5', name: 'Breakfast'),
-  ];
-
   @override
   void initState() {
     super.initState();
     _image = null;
+    final catMdl = Provider.of<CategoryProvider>(context, listen: false);
+    catMdl.getCategories();
   }
+
+  List<String> selected = [];
 
   @override
   Widget build(BuildContext context) {
+    final usrMdl = Provider.of<UserProvider>(context);
+    final itemMdl = Provider.of<ItemProvider>(context);
+    final catMdl = Provider.of<CategoryProvider>(context);
+    final _items = catMdl.category.map((category) => (category.name)).toList();
     return Scaffold(
       backgroundColor: Color(0xFFF6F2EC),
       body: SafeArea(
@@ -91,7 +97,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                             padding: const EdgeInsets.only(top: 50),
                             child: const Icon(
                               Icons.upload,
-                              color: Colors.red,
+                              color: Colors.black,
                               size: 30,
                             ),
                           ),
@@ -104,9 +110,12 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     textScaleFactor: 1.5,
                   ),
                   GFMultiSelect(
-                    items: ['Messi', 'Griezmann', 'Coutinho'],
+                    items: _items,
                     onSelect: (value) {
-                      print('selected $value ');
+                      selected = [];
+                      for (var i = 0; i < value.length; i++) {
+                        selected.add("${catMdl.findByIndex(value[i]).id}");
+                      }
                     },
                     dropdownBgColor: Color(0xFFF6F2EC),
                     dropdownTitleTileText: 'Select Category',
@@ -144,7 +153,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   ),
                   TextFormField(
                     onSaved: (value) {
-                      // min_capacity = value!;
+                      name = value!;
                     },
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
@@ -172,7 +181,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   ),
                   TextFormField(
                     onSaved: (value) {
-                      // max_capacity = value!;
+                      price = value!;
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
@@ -201,7 +210,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   ),
                   TextFormField(
                     onSaved: (value) {
-                      // table_no = value!;
+                      description = value!;
                     },
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
@@ -229,30 +238,35 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      // if (formkey.currentState!.validate()) {
-                      //   formkey.currentState!.save();
-                      //   String token = usrMdl.user.token!;
-                      //   String userId = usrMdl.user.userId!;
+                      if (formkey.currentState!.validate()) {
+                        formkey.currentState!.save();
+                        String token = usrMdl.user.token!;
+                        String userId = usrMdl.user.userId!;
 
-                      //   TableModel tm = TableModel(
-                      //     min_capacity: min_capacity,
-                      //     max_capacity: max_capacity,
-                      //     table_number: table_no,
-                      //     is_available: true,
-                      //     tableOf: userId,
-                      //   );
-                      //   final bool response = await tbMdl.addTable(tm, token);
-                      //   if (response) {
-                      //     formkey.currentState!.reset();
-                      //     MotionToast.success(
-                      //       description: Text('New Table Added'),
-                      //     ).show(context);
-                      //   } else {
-                      //     MotionToast.error(
-                      //       description: Text('Error in adding table'),
-                      //     ).show(context);
-                      //   }
-                      // }
+                        ItemModel im = ItemModel(
+                          name: name,
+                          categories: selected,
+                          price: price,
+                          description: description,
+                          itemOf: userId,
+                        );
+                        final bool response = await itemMdl.addItem(
+                          im,
+                          token,
+                          _image,
+                        );
+                        // final bool response = false;
+                        if (response) {
+                          formkey.currentState!.reset();
+                          MotionToast.success(
+                            description: Text('New Item Added'),
+                          ).show(context);
+                        } else {
+                          MotionToast.error(
+                            description: Text('Error in adding item'),
+                          ).show(context);
+                        }
+                      }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

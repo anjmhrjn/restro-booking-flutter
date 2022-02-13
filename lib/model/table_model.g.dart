@@ -13,6 +13,9 @@ TableModel _$TableModelFromJson(Map<String, dynamic> json) => TableModel(
       is_available: json['is_available'] as bool?,
       table_number: json['table_number'] as String?,
       tableOf: json['tableOf'] as String?,
+      user_detail: json['user_detail'] == null
+          ? null
+          : User.fromJson(json['user_detail'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TableModelToJson(TableModel instance) =>
@@ -23,4 +26,5 @@ Map<String, dynamic> _$TableModelToJson(TableModel instance) =>
       'is_available': instance.is_available,
       'table_number': instance.table_number,
       'tableOf': instance.tableOf,
+      'user_detail': instance.user_detail,
     };

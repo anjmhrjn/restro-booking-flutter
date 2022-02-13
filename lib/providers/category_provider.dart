@@ -11,7 +11,7 @@ import 'package:restro_booking/utility/app_url.dart';
 class CategoryProvider extends ChangeNotifier {
   List<CategoryModel> _category = [];
 
-  List<CategoryModel> get table => _category;
+  List<CategoryModel> get category => _category;
 
   Future<bool> addCategory(CategoryModel catData, String token) async {
     final Map<String, dynamic> categoryMap = {
@@ -111,8 +111,13 @@ class CategoryProvider extends ChangeNotifier {
     return _category.firstWhere((element) => element.id == id);
   }
 
-  getMyTables(userId, token) async {
+  CategoryModel findByIndex(int index) {
+    return _category[index];
+  }
+
+  getCategories() async {
     _category = await getCategoryData();
+    // print("Category $_category");
     notifyListeners();
   }
 }

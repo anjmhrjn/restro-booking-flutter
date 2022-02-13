@@ -11,6 +11,7 @@ class ItemScreen extends StatelessWidget {
       "addBtnText": "Add New Item",
       "addBtnRoute": "/add-item",
       "viewBtnText": "View My Items",
+      "viewBtnRoute": "/my-items",
     });
   }
 }
