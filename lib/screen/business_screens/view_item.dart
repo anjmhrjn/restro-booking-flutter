@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
+import 'package:restro_booking/model/item_model.dart';
 import 'package:restro_booking/providers/item_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/bottomNavBar.dart';
@@ -20,6 +21,59 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     final itemMdl = Provider.of<ItemProvider>(context, listen: false);
     final usrMdl = Provider.of<UserProvider>(context, listen: false);
     itemMdl.getMyItems(usrMdl.user.token);
+  }
+
+  Widget menuCard(BuildContext context, ItemModel menuItem) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 5,
+        color: Color(0xFFF6F2EC),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+          ),
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundImage: menuItem.images != null || menuItem.images == ''
+                  ? NetworkImage(AppUrl.baseUrl + "/${menuItem.images}")
+                  : NetworkImage(AppUrl.baseUrl + '/item_custom.jpg'),
+              radius: 25,
+            ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    '${menuItem.name}',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF041838),
+                    ),
+                  ),
+                ),
+                Text(
+                  '${menuItem.description}',
+                  style: TextStyle(
+                    color: Color(0xFFACC9DC),
+                  ),
+                ),
+              ],
+            ),
+            trailing: Text(
+              'NRs. ${menuItem.price}',
+              style: TextStyle(
+                color: Color(0xFF041838),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget createCard(item) {
@@ -122,8 +176,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   ),
                   IconButton(
                     onPressed: () async {
-                      // var deleted = await delTable(table.id);
-                      var deleted = false;
+                      var deleted = await delItem(item.id);
                       if (deleted) {
                         MotionToast.success(
                           description: Text('Table Deleted'),
@@ -145,6 +198,13 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> delItem(itemId) async {
+    final itemMdl = Provider.of<ItemProvider>(context, listen: false);
+    final usrMdl = Provider.of<UserProvider>(context, listen: false);
+    final result = await itemMdl.deleteItem(itemId, usrMdl.user.token);
+    return result;
   }
 
   @override
