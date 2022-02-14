@@ -7,6 +7,7 @@ import 'package:restro_booking/providers/category_provider.dart';
 import 'package:restro_booking/providers/item_provider.dart';
 import 'package:restro_booking/providers/table_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
+import 'package:restro_booking/screen/account.dart';
 import 'package:restro_booking/screen/book.dart';
 import 'package:restro_booking/screen/business_screens/add_category.dart';
 import 'package:restro_booking/screen/business_screens/add_item.dart';
@@ -26,6 +27,7 @@ import 'package:restro_booking/screen/restroList.dart';
 import 'package:restro_booking/screen/restro_profile.dart';
 import 'package:restro_booking/screen/business_screens/tableScreen.dart';
 import 'package:restro_booking/screen/business_screens/table_bulk.dart';
+import 'package:restro_booking/utility/shared_preference.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,6 +53,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login': (context) => LoginScreen(),
           '/register': (context) => RegisterScreen(),
+          '/account': (context) => AccountScreen(),
           '/addTable': (context) => TableAdd(),
           '/bulkAddTable': (context) => TableBulkAdd(),
           '/restro-profile': (context) => RestroProfile(),

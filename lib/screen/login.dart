@@ -19,6 +19,18 @@ class _LoginScreenState extends State<LoginScreen> {
   String username = '';
   String password = '';
 
+  void setLoggedInStatus() async {
+    bool status = await UserPreferences().getAuthenticatedStatus();
+    final usrMdl = Provider.of<UserProvider>(context, listen: false);
+    usrMdl.setIsAuthenticated(status);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setLoggedInStatus();
+  }
+
   Widget LoginDisplay(auth) {
     return SafeArea(
       child: SingleChildScrollView(
@@ -138,11 +150,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           response.then((response) {
                             if (response['status']) {
                               UserDetails user = response['user'];
-                              Provider.of<UserProvider>(
+                              final usrState = Provider.of<UserProvider>(
                                 context,
                                 listen: false,
-                              ).setUser(user);
-                              Navigator.pushReplacementNamed(
+                              );
+                              usrState.setUser(user);
+                              usrState.setIsAuthenticated(true);
+                              Navigator.pushNamed(
                                 context,
                                 '/dashboard',
                               );
@@ -222,10 +236,16 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     AuthProvider auth = Provider.of<AuthProvider>(context);
-    return Scaffold(
-        backgroundColor: Color(0xFFF6F2EC),
-        body: UserPreferences().getToken() == ''
-            ? LoginDisplay(auth)
-            : UserDashboard());
+    // return Scaffold(
+    //   backgroundColor: Color(0xFFF6F2EC),
+    //   body: LoginDisplay(auth),
+    // );
+    return Consumer<UserProvider>(
+      builder: (context, value, child) {
+        return Scaffold(
+          body: value.isAuthenticated ? UserDashboard() : LoginDisplay(auth),
+        );
+      },
+    );
   }
 }

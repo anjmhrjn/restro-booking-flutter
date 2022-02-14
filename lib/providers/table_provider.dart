@@ -44,7 +44,6 @@ class TableProvider extends ChangeNotifier {
       "table_number": tableData.table_number,
       "tableOf": tableData.tableOf,
     };
-    print(tableMap);
     try {
       String tok = 'Bearer $token';
       Response response = await post(
@@ -52,7 +51,6 @@ class TableProvider extends ChangeNotifier {
         body: tableMap,
         headers: {'Authorization': tok},
       );
-      print(response.statusCode);
       if (response.statusCode == 200) {
         var tableRes = jsonDecode(response.body) as Map;
         return tableRes['success'];

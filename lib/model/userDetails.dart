@@ -1,11 +1,10 @@
-import 'package:restro_booking/model/user_model.dart';
-
 class UserDetails {
-  String? userId;
-  String? username;
-  String? email;
-  String? user_type;
-  String? token;
+  final String? userId;
+  final String? username;
+  final String? email;
+  final String? user_type;
+  final String? token;
+  final String? user_image;
 
   UserDetails({
     this.userId,
@@ -13,6 +12,7 @@ class UserDetails {
     this.email,
     this.user_type,
     this.token,
+    this.user_image,
   });
 
   String get getUsername => username!;
@@ -24,6 +24,7 @@ class UserDetails {
       email: responseData['email'],
       user_type: responseData['user_type'],
       token: responseData['token'],
+      user_image: responseData['user_image'],
     );
   }
 }
