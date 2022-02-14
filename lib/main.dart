@@ -12,6 +12,7 @@ import 'package:restro_booking/screen/business_screens/add_category.dart';
 import 'package:restro_booking/screen/business_screens/add_item.dart';
 import 'package:restro_booking/screen/business_screens/booking_list.dart';
 import 'package:restro_booking/screen/business_screens/myTables.dart';
+import 'package:restro_booking/screen/business_screens/update_booking_status.dart';
 import 'package:restro_booking/screen/business_screens/update_item.dart';
 import 'package:restro_booking/screen/business_screens/update_table.dart';
 import 'package:restro_booking/screen/business_screens/view_item.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
           '/my-items': (context) => ViewItemScreen(),
           '/update-item': (context) => UpdateItemScreen(),
           '/business-bookings': (context) => BusinessBookingList(),
+          '/update-status': (context) => UpdateBookingStatusScreen(),
         },
         // home: RegisterScreen(),
         // home: LoginScreen(),

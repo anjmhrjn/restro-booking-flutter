@@ -130,8 +130,8 @@ class _BusinessBookingListState extends State<BusinessBookingList> {
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
-                        '/update-table',
-                        // arguments: {"id": table.id},
+                        '/update-status',
+                        arguments: {"id": booking.id},
                       );
                     },
                     color: Color(0xFF004194),

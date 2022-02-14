@@ -91,7 +91,6 @@ class BookingProvider extends ChangeNotifier {
         BookingModel bookData;
         List<dynamic> l = json.decode(response.body);
         for (var m in l) {
-          print(m);
           bookData = BookingModel.fromJson(m);
           result.add(bookData);
         }
