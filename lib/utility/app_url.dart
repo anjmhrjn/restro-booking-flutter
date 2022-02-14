@@ -18,6 +18,7 @@ class AppUrl {
   static const String businessBooking = baseUrl + '/business/my-booking';
   static const String updateBooking = baseUrl + '/update/booking/';
   static const String updateBookingStatus = baseUrl + '/booking/update-status/';
+  static const String filterBooking = baseUrl + '/booking/filter';
 
   ///booking/update-status/
 }

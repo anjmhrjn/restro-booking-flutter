@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:restro_booking/model/booking_model.dart';
-import 'package:restro_booking/model/item_model.dart';
 import 'package:restro_booking/utility/app_url.dart';
 
 class BookingProvider extends ChangeNotifier {
@@ -118,6 +117,32 @@ class BookingProvider extends ChangeNotifier {
       return false;
     } catch (e) {
       return false;
+    }
+  }
+
+  filterBooking(Map<String, dynamic> filterData, String token) async {
+    String tok = 'Bearer $token';
+    List<BookingModel> result = [];
+    try {
+      final response = await post(
+        Uri.parse(AppUrl.filterBooking),
+        body: filterData,
+        headers: {
+          'Authorization': tok,
+        },
+      );
+      if (response.statusCode == 200) {
+        BookingModel bookData;
+        List<dynamic> l = json.decode(response.body);
+        for (var m in l) {
+          bookData = BookingModel.fromJson(m);
+          result.add(bookData);
+        }
+        _booking = result;
+        notifyListeners();
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
