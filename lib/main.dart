@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => LoginScreen(),
           '/register': (context) => RegisterScreen(),
           '/addTable': (context) => TableAdd(),
+          '/bulkAddTable': (context) => TableBulkAdd(),
           '/restro-profile': (context) => RestroProfile(),
           '/restro-lists': (context) => RestroLists(),
           '/table-screen': (context) => TableScreen(),

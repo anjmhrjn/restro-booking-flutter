@@ -37,6 +37,34 @@ class TableProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> bulkTableAdd(TableModel tableData, String token) async {
+    final Map<String, dynamic> tableMap = {
+      "min_capacity": tableData.min_capacity,
+      "max_capacity": tableData.max_capacity,
+      "table_number": tableData.table_number,
+      "tableOf": tableData.tableOf,
+    };
+    print(tableMap);
+    try {
+      String tok = 'Bearer $token';
+      Response response = await post(
+        Uri.parse(AppUrl.tableBulkAdd),
+        body: tableMap,
+        headers: {'Authorization': tok},
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        var tableRes = jsonDecode(response.body) as Map;
+        return tableRes['success'];
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<bool> updateTable(TableModel tableData, String token) async {
     final Map<String, dynamic> tableMap = {
       "min_capacity": tableData.min_capacity,

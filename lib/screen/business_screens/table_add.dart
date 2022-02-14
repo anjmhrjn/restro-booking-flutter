@@ -52,7 +52,9 @@ class _TableAddState extends State<TableAdd> {
                     children: [
                       Text('Add Multiple Tables at Once:'),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/bulkAddTable');
+                        },
                         child: Icon(Icons.add),
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
