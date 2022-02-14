@@ -57,7 +57,11 @@ class _UserDashboardState extends State<UserDashboard> {
           ),
         ),
       ),
-      bottomNavigationBar: getBusinessBottomNavBar(context),
+      bottomNavigationBar: usrMdl.user.user_type == 'Business'
+          ? getBusinessBottomNavBar(context)
+          : (usrMdl.user.user_type == 'Customer'
+              ? getCustomerBottomNavBar(context)
+              : getAdminBottomNavBar(context)),
     );
   }
 }

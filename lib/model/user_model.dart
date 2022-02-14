@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:restro_booking/model/table_model.dart';
 
 part 'user_model.g.dart';
 
@@ -21,24 +22,26 @@ class User {
   final bool firstLogin;
   final String? age;
   final String? gender;
+  final List<TableModel>? tables;
 
   User({
-    this.id = '',
-    this.username = '',
-    this.password = '',
-    this.email = '',
-    this.user_type = '',
-    this.name = '',
-    this.bio = '',
-    this.user_image = '',
-    this.address = '',
-    this.phone = '',
+    this.id,
+    this.username,
+    this.password,
+    this.email,
+    this.user_type,
+    this.name,
+    this.bio,
+    this.user_image,
+    this.address,
+    this.phone,
     this.isSuperUser = false,
     this.isActive = false,
     this.isVerified = false,
     this.firstLogin = false,
-    this.age = '',
-    this.gender = '',
+    this.age,
+    this.gender,
+    this.tables,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

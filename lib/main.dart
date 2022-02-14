@@ -5,6 +5,7 @@ import 'package:restro_booking/providers/booking_provider.dart';
 import 'package:restro_booking/providers/btmnavigation_provider.dart';
 import 'package:restro_booking/providers/category_provider.dart';
 import 'package:restro_booking/providers/item_provider.dart';
+import 'package:restro_booking/providers/restaurant_provider.dart';
 import 'package:restro_booking/providers/table_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/account.dart';
@@ -17,6 +18,8 @@ import 'package:restro_booking/screen/business_screens/update_booking_status.dar
 import 'package:restro_booking/screen/business_screens/update_item.dart';
 import 'package:restro_booking/screen/business_screens/update_table.dart';
 import 'package:restro_booking/screen/business_screens/view_item.dart';
+import 'package:restro_booking/screen/customer_screens/my_booking.dart';
+import 'package:restro_booking/screen/customer_screens/restaurant_list.dart';
 import 'package:restro_booking/screen/dashboard.dart';
 import 'package:restro_booking/screen/business_screens/itemScreen.dart';
 import 'package:restro_booking/screen/business_screens/table_add.dart';
@@ -47,6 +50,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => ItemProvider()),
         ChangeNotifierProvider(create: (_) => BookingProvider()),
+        ChangeNotifierProvider(create: (_) => RestaurantProvider()),
       ],
       child: MaterialApp(
         initialRoute: '/login',
@@ -69,15 +73,14 @@ class MyApp extends StatelessWidget {
           '/update-item': (context) => UpdateItemScreen(),
           '/business-bookings': (context) => BusinessBookingList(),
           '/update-status': (context) => UpdateBookingStatusScreen(),
+
+          // customer routes
+          '/restaurant': (context) => RestaurantList(),
+          '/my-reservations': (context) => MyBookingsScreen(),
         },
-        // home: RegisterScreen(),
-        // home: LoginScreen(),
         // home: BookTable(),
         // home: MenuItems(),
-        // home: RestroLists(),
         // home: RestroProfile(),
-        // home: TableAdd(),
-        // home: TableBulkAdd(),
       ),
     );
   }

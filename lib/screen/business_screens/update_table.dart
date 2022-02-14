@@ -194,10 +194,6 @@ class _UpdateTableScreenState extends State<UpdateTableScreen> {
                     onPressed: () async {
                       if (formkey.currentState!.validate()) {
                         formkey.currentState!.save();
-                        print(min_capacity);
-                        print(max_capacity);
-                        print(table_no);
-                        print(is_available);
                         String token = usrMdl.user.token!;
                         String userId = usrMdl.user.userId!;
 

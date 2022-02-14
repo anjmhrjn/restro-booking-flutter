@@ -21,5 +21,9 @@ class AppUrl {
   static const String updateBookingStatus = baseUrl + '/booking/update-status/';
   static const String filterBooking = baseUrl + '/booking/filter';
 
+  // customer api routes
+  static const String getAllBusiness = baseUrl + '/all-business';
+  static const String searchRestro = baseUrl + '/search-restaurant/';
+
   ///booking/update-status/
 }

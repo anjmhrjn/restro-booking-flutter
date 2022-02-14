@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bordered_text/bordered_text.dart';
+import 'package:provider/provider.dart';
+import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/bottomNavBar.dart';
 
 class RestroProfile extends StatelessWidget {
@@ -7,6 +9,7 @@ class RestroProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final usrMdl = Provider.of<UserProvider>(context, listen: false);
     const List<String> tag_list = ["Cafe", "Indian", "Spicy Foods"];
     const List<String> image_list = [
       "images/snacks.jpg",
@@ -245,7 +248,11 @@ class RestroProfile extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: getBusinessBottomNavBar(context),
+      bottomNavigationBar: usrMdl.user.user_type == 'Business'
+          ? getBusinessBottomNavBar(context)
+          : (usrMdl.user.user_type == 'Customer'
+              ? getCustomerBottomNavBar(context)
+              : getAdminBottomNavBar(context)),
     );
   }
 }
