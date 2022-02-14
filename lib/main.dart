@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restro_booking/providers/auth_provider.dart';
+import 'package:restro_booking/providers/booking_provider.dart';
 import 'package:restro_booking/providers/btmnavigation_provider.dart';
 import 'package:restro_booking/providers/category_provider.dart';
 import 'package:restro_booking/providers/item_provider.dart';
@@ -9,6 +10,7 @@ import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/book.dart';
 import 'package:restro_booking/screen/business_screens/add_category.dart';
 import 'package:restro_booking/screen/business_screens/add_item.dart';
+import 'package:restro_booking/screen/business_screens/booking_list.dart';
 import 'package:restro_booking/screen/business_screens/myTables.dart';
 import 'package:restro_booking/screen/business_screens/update_item.dart';
 import 'package:restro_booking/screen/business_screens/update_table.dart';
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BottomNavigationBarProvider()),
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => ItemProvider()),
+        ChangeNotifierProvider(create: (_) => BookingProvider()),
       ],
       child: MaterialApp(
         initialRoute: '/login',
@@ -59,6 +62,7 @@ class MyApp extends StatelessWidget {
           '/add-category': (context) => AddCategoryScreen(),
           '/my-items': (context) => ViewItemScreen(),
           '/update-item': (context) => UpdateItemScreen(),
+          '/business-bookings': (context) => BusinessBookingList(),
         },
         // home: RegisterScreen(),
         // home: LoginScreen(),

@@ -14,4 +14,10 @@ class AppUrl {
   static const String updateItem = baseUrl + '/item/update/';
   static const String myItems = baseUrl + '/my-items/';
   static const String deleteItem = baseUrl + '/item/delete/';
+  static const String bookTable = baseUrl + '/book/table';
+  static const String businessBooking = baseUrl + '/business/my-booking';
+  static const String updateBooking = baseUrl + '/update/booking/';
+  static const String updateBookingStatus = baseUrl + '/booking/update-status/';
+
+  ///booking/update-status/
 }

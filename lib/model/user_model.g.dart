@@ -16,7 +16,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       bio: json['bio'] as String? ?? '',
       user_image: json['user_image'] as String? ?? '',
       address: json['address'] as String? ?? '',
-      phone: json['phone'] as String? ?? '',
+      phone: json['phone'].toString(),
       isSuperUser: json['isSuperUser'] as bool? ?? false,
       isActive: json['isActive'] as bool? ?? false,
       isVerified: json['isVerified'] as bool? ?? false,

@@ -7,7 +7,7 @@ Widget getBusinessBottomNavBar(context) {
     '/dashboard',
     '/table-screen',
     '/item-screen',
-    '/restro-lists',
+    '/business-bookings',
     '/restro-profile'
   ];
   final btmProvider = Provider.of<BottomNavigationBarProvider>(context);
