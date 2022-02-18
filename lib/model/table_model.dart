@@ -27,14 +27,6 @@ class TableModel {
     is_available = value;
   }
 
-  factory TableModel.fromJson(Map<String, dynamic> json) {
-    return TableModel(
-      id: json['_id'],
-      min_capacity: json['min_capacity'].toString(),
-      max_capacity: json['max_capacity'].toString(),
-      is_available: json['isAvailable'],
-      table_number: json['table_number'].toString(),
-      tableOf: json['tableOf'],
-    );
-  }
+  factory TableModel.fromJson(Map<String, dynamic> json) =>
+      _$TableModelFromJson(json);
 }

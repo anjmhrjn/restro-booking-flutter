@@ -8,10 +8,10 @@ part of 'table_model.dart';
 
 TableModel _$TableModelFromJson(Map<String, dynamic> json) => TableModel(
       id: json['id'] as String? ?? '',
-      min_capacity: json['min_capacity'] as String?,
-      max_capacity: json['max_capacity'] as String?,
+      min_capacity: json['min_capacity'].toString(),
+      max_capacity: json['max_capacity'].toString(),
       is_available: json['is_available'] as bool?,
-      table_number: json['table_number'] as String?,
+      table_number: json['table_number'].toString(),
       tableOf: json['tableOf'] as String?,
       user_detail: json['user_detail'] == null
           ? null

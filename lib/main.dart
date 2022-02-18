@@ -24,10 +24,10 @@ import 'package:restro_booking/screen/dashboard.dart';
 import 'package:restro_booking/screen/business_screens/itemScreen.dart';
 import 'package:restro_booking/screen/business_screens/table_add.dart';
 import 'package:restro_booking/screen/login.dart';
-import 'package:restro_booking/screen/menuList.dart';
+import 'package:restro_booking/screen/customer_screens/menuList.dart';
 import 'package:restro_booking/screen/register.dart';
 import 'package:restro_booking/screen/restroList.dart';
-import 'package:restro_booking/screen/restro_profile.dart';
+import 'package:restro_booking/screen/customer_screens/restro_profile.dart';
 import 'package:restro_booking/screen/business_screens/tableScreen.dart';
 import 'package:restro_booking/screen/business_screens/table_bulk.dart';
 import 'package:restro_booking/utility/shared_preference.dart';
@@ -53,6 +53,27 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RestaurantProvider()),
       ],
       child: MaterialApp(
+        onGenerateRoute: (settings) {
+          // If you push the PassArguments route
+          if (settings.name == '/restro-items') {
+            // Cast the arguments to the correct
+            // type: ScreenArguments.
+            final args = settings.arguments as Map;
+
+            // Then, extract the required data from
+            // the arguments and pass the data to the
+            // correct screen.
+            return MaterialPageRoute(
+              builder: (context) {
+                return MenuItems(
+                  id: args['id'],
+                );
+              },
+            );
+          }
+          assert(false, 'Need to implement ${settings.name}');
+          return null;
+        },
         initialRoute: '/login',
         routes: {
           '/login': (context) => LoginScreen(),
@@ -77,10 +98,11 @@ class MyApp extends StatelessWidget {
           // customer routes
           '/restaurant': (context) => RestaurantList(),
           '/my-reservations': (context) => MyBookingsScreen(),
+          // '/restro-items': (context) => MenuItems(),
         },
         // home: BookTable(),
         // home: MenuItems(),
-        // home: RestroProfile(),
+        // home: RestroProfile(), (used)
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:restro_booking/model/category_model.dart';
+import 'package:restro_booking/model/item_model.dart';
 import 'package:restro_booking/model/table_model.dart';
 
 part 'user_model.g.dart';
@@ -23,6 +25,10 @@ class User {
   final String? age;
   final String? gender;
   final List<TableModel>? tables;
+  final List<String>? tags;
+  final String? opening_time;
+  final String? closing_time;
+  // final List<ItemModel>? items;
 
   User({
     this.id,
@@ -42,6 +48,10 @@ class User {
     this.age,
     this.gender,
     this.tables,
+    this.tags,
+    this.opening_time,
+    this.closing_time,
+    // this.items,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

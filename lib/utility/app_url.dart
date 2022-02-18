@@ -24,6 +24,7 @@ class AppUrl {
   // customer api routes
   static const String getAllBusiness = baseUrl + '/all-business';
   static const String searchRestro = baseUrl + '/search-restaurant/';
+  static const String getRestroItems = baseUrl + '/users-items/';
 
   ///booking/update-status/
 }

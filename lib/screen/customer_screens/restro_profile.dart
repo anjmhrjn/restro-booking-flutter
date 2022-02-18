@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:provider/provider.dart';
+import 'package:restro_booking/model/user_model.dart';
+import 'package:restro_booking/providers/restaurant_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/bottomNavBar.dart';
+import 'package:restro_booking/utility/app_url.dart';
 
 class RestroProfile extends StatelessWidget {
   const RestroProfile({Key? key}) : super(key: key);
@@ -10,7 +13,13 @@ class RestroProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usrMdl = Provider.of<UserProvider>(context, listen: false);
-    const List<String> tag_list = ["Cafe", "Indian", "Spicy Foods"];
+
+    RestaurantProvider usrPrv = Provider.of<RestaurantProvider>(context);
+
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+    final User restroData = usrPrv.findById(args['id']);
+
+    List<String>? tag_list = restroData.tags == null ? [] : restroData.tags;
     const List<String> image_list = [
       "images/snacks.jpg",
       "images/restro1.jpg",
@@ -18,6 +27,7 @@ class RestroProfile extends StatelessWidget {
     ];
 
     return Scaffold(
+      backgroundColor: Color(0xFFF6F2EC),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -29,9 +39,17 @@ class RestroProfile extends StatelessWidget {
                     height: 240,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(
-                          'images/aloo nazakat.jpg',
-                        ),
+                        image: restroData.user_image == null ||
+                                restroData.user_image == ''
+                            ? NetworkImage(
+                                AppUrl.baseUrl + "/account.png",
+                              )
+                            : NetworkImage(
+                                AppUrl.baseUrl + "/${restroData.user_image}",
+                              ),
+                        // image: AssetImage(
+                        //   'images/aloo nazakat.jpg',
+                        // ),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
                           Colors.black.withOpacity(1),
@@ -45,28 +63,6 @@ class RestroProfile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: SizedBox(
-                      height: 220,
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: BorderedText(
-                          strokeWidth: 5.0,
-                          child: Text(
-                            'Lorem Ipsum Cafe',
-                            style: TextStyle(
-                              color: Color(0xFFF6F2EC),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 27,
-                              letterSpacing: 1.5,
-                              // decorationColor: Colors.red,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
                 ],
               ),
               Padding(
@@ -75,9 +71,29 @@ class RestroProfile extends StatelessWidget {
                   vertical: 10,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: BorderedText(
+                        strokeWidth: 5.0,
+                        child: Text(
+                          'Lorem Ipsum Cafe',
+                          style: TextStyle(
+                            color: Color(0xFFF6F2EC),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 27,
+                            letterSpacing: 1.5,
+                            // decorationColor: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
-                      children: const [
+                      children: [
                         Icon(
                           Icons.location_on,
                           color: Color(0xFFACC9DC),
@@ -86,7 +102,7 @@ class RestroProfile extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          'Jhamsikhel, Lalitpur',
+                          '${restroData.address}',
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             color: Color(0xFF041838),
@@ -100,11 +116,11 @@ class RestroProfile extends StatelessWidget {
                     SizedBox(
                       height: 30,
                       child: ListView.builder(
-                        itemCount: tag_list.length,
+                        itemCount: tag_list!.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
-                            padding: const EdgeInsets.only(right: 10),
+                            padding: EdgeInsets.only(right: 10),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 primary: Color(0xFF004194),
@@ -143,48 +159,49 @@ class RestroProfile extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
                     Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                      '${restroData.bio}',
                       style: TextStyle(height: 1.4),
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Popular Items',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 150,
-                      child: ListView.builder(
-                        itemCount: tag_list.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 10, right: 10),
-                            child: SizedBox(
-                              width: 150,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                // height: 100,
-                                child: Image.asset(
-                                  image_list[index],
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Text(
+                    //     'Popular Items',
+                    //     style: TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 16,
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 150,
+                    //   child: ListView.builder(
+                    //     itemCount: tag_list.length,
+                    //     scrollDirection: Axis.horizontal,
+                    //     itemBuilder: (BuildContext context, int index) {
+                    //       return Padding(
+                    //         padding: const EdgeInsets.only(top: 10, right: 10),
+                    //         child: SizedBox(
+                    //           width: 150,
+                    //           child: ClipRRect(
+                    //             borderRadius: BorderRadius.circular(8),
+                    //             // height: 100,
+                    //             child: Image.asset(
+                    //               image_list[index],
+                    //               fit: BoxFit.cover,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+
                     SizedBox(
                       height: 20,
                     ),
@@ -192,7 +209,13 @@ class RestroProfile extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFFACC9DC),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/restro-items',
+                          arguments: {"id": restroData.id},
+                        );
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [

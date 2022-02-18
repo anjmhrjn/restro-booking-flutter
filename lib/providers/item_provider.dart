@@ -124,6 +124,48 @@ class ItemProvider extends ChangeNotifier {
     }
   }
 
+  Future<List<ItemModel>> getRestaurantItems(restroId, token) async {
+    List<ItemModel> result = [];
+    String tok = 'Bearer $token';
+    final response = await get(
+      Uri.parse(AppUrl.getRestroItems + restroId),
+      headers: {
+        'Authorization': tok,
+      },
+    );
+    if (response.statusCode == 200) {
+      ItemModel item;
+      Map<String, dynamic> resData =
+          json.decode(response.body) as Map<String, dynamic>;
+      Iterable l = resData["items"];
+      for (var m in l) {
+        item = ItemModel.fromJson(m);
+        result.add(item);
+      }
+    }
+    return result;
+    try {
+      final response = await get(
+        Uri.parse(AppUrl.getRestroItems + restroId),
+        headers: {
+          'Authorization': tok,
+        },
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        ItemModel item;
+        Iterable l = json.decode(response.body);
+        for (var m in l) {
+          item = ItemModel.fromJson(m);
+          result.add(item);
+        }
+      }
+      return result;
+    } catch (e) {
+      return result;
+    }
+  }
+
   Future<bool> deleteItem(itemId, token) async {
     String tok = 'Bearer $token';
     try {
@@ -150,6 +192,11 @@ class ItemProvider extends ChangeNotifier {
 
   getMyItems(token) async {
     _item = await getMyItemsData(token);
+    notifyListeners();
+  }
+
+  setRestroItems(restroId, token) async {
+    _item = await getRestaurantItems(restroId, token);
     notifyListeners();
   }
 }

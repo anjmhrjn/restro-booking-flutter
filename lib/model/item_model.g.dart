@@ -12,7 +12,7 @@ ItemModel _$ItemModelFromJson(Map<String, dynamic> json) => ItemModel(
       categories: (json['categories'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      price: json['price'].toString() as String?,
+      price: json['price'].toString(),
       images: json['images'] as String?,
       description: json['description'] as String?,
       itemOf: json['itemOf'] as String?,
@@ -28,7 +28,7 @@ Map<String, dynamic> _$ItemModelToJson(ItemModel instance) => <String, dynamic>{
       '_id': instance.id,
       'name': instance.name,
       'categories': instance.categories,
-      'price': instance.price as String,
+      'price': instance.price,
       'images': instance.images,
       'description': instance.description,
       'itemOf': instance.itemOf,

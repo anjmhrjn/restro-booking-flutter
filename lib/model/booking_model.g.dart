@@ -11,7 +11,7 @@ BookingModel _$BookingModelFromJson(Map<String, dynamic> json) => BookingModel(
       requested_for: json['requested_for'] as String?,
       start_time: json['start_time'] as String?,
       end_time: json['end_time'] as String?,
-      total_seats: json['total_seats'].toString(),
+      total_seats: json['total_seats'] as String?,
       table: json['table'] as String?,
       user: json['user'] as String?,
       booking_status: json['booking_status'] as String?,

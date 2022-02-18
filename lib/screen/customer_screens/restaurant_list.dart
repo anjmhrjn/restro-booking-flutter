@@ -65,7 +65,7 @@ class _RestaurantListState extends State<RestaurantList> {
               Navigator.pushNamed(
                 context,
                 '/restro-profile',
-                arguments: restrodetail.id,
+                arguments: {"id": restrodetail.id},
               );
             },
             leading: CircleAvatar(
