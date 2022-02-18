@@ -20,6 +20,7 @@ import 'package:restro_booking/screen/business_screens/update_table.dart';
 import 'package:restro_booking/screen/business_screens/view_item.dart';
 import 'package:restro_booking/screen/customer_screens/my_booking.dart';
 import 'package:restro_booking/screen/customer_screens/restaurant_list.dart';
+import 'package:restro_booking/screen/customer_screens/restro_tables.dart';
 import 'package:restro_booking/screen/dashboard.dart';
 import 'package:restro_booking/screen/business_screens/itemScreen.dart';
 import 'package:restro_booking/screen/business_screens/table_add.dart';
@@ -98,6 +99,7 @@ class MyApp extends StatelessWidget {
           // customer routes
           '/restaurant': (context) => RestaurantList(),
           '/my-reservations': (context) => MyBookingsScreen(),
+          '/restro-tables': (context) => RestroTables(),
           // '/restro-items': (context) => MenuItems(),
         },
         // home: BookTable(),

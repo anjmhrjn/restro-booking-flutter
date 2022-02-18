@@ -10,7 +10,7 @@ TableModel _$TableModelFromJson(Map<String, dynamic> json) => TableModel(
       id: json['id'] as String? ?? '',
       min_capacity: json['min_capacity'].toString(),
       max_capacity: json['max_capacity'].toString(),
-      is_available: json['is_available'] as bool?,
+      is_available: json['isAvailable'] as bool?,
       table_number: json['table_number'].toString(),
       tableOf: json['tableOf'] as String?,
       user_detail: json['user_detail'] == null
@@ -23,7 +23,7 @@ Map<String, dynamic> _$TableModelToJson(TableModel instance) =>
       'id': instance.id,
       'min_capacity': instance.min_capacity,
       'max_capacity': instance.max_capacity,
-      'is_available': instance.is_available,
+      'isAvailable': instance.is_available,
       'table_number': instance.table_number,
       'tableOf': instance.tableOf,
       'user_detail': instance.user_detail,

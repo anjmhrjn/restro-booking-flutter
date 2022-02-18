@@ -19,12 +19,7 @@ class RestroProfile extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as Map;
     final User restroData = usrPrv.findById(args['id']);
 
-    List<String>? tag_list = restroData.tags == null ? [] : restroData.tags;
-    const List<String> image_list = [
-      "images/snacks.jpg",
-      "images/restro1.jpg",
-      "images/aloo nazakat.jpg"
-    ];
+    List<String>? tag_list = restroData.tags ?? [];
 
     return Scaffold(
       backgroundColor: Color(0xFFF6F2EC),
@@ -78,7 +73,7 @@ class RestroProfile extends StatelessWidget {
                       child: BorderedText(
                         strokeWidth: 5.0,
                         child: Text(
-                          'Lorem Ipsum Cafe',
+                          '${restroData.name}',
                           style: TextStyle(
                             color: Color(0xFFF6F2EC),
                             fontWeight: FontWeight.bold,
@@ -116,7 +111,7 @@ class RestroProfile extends StatelessWidget {
                     SizedBox(
                       height: 30,
                       child: ListView.builder(
-                        itemCount: tag_list!.length,
+                        itemCount: tag_list.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
@@ -243,12 +238,18 @@ class RestroProfile extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFFEE6A3E),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/restro-tables',
+                          arguments: {'id': restroData.id},
+                        );
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Text(
-                            'Book Now',
+                            'Available Tables',
                             style: TextStyle(
                               color: Color(0xFFF6F2EC),
                             ),
