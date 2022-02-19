@@ -383,6 +383,7 @@ class _ReserveTableState extends State<ReserveTable> {
                               start_time: modified_st,
                               end_time: modified_et,
                               table: args['table_id'],
+                              user: usrMdl.user.userId,
                             );
                             final bool response = await bknMdl.makeReservation(
                               bm,

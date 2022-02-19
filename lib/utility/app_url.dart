@@ -25,6 +25,7 @@ class AppUrl {
   static const String getAllBusiness = baseUrl + '/all-business';
   static const String searchRestro = baseUrl + '/search-restaurant/';
   static const String getRestroItems = baseUrl + '/users-items/';
+  static const String getMyBooking = baseUrl + '/my-bookings';
 
   ///booking/update-status/
 }

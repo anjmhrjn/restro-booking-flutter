@@ -15,7 +15,6 @@ class BookingProvider extends ChangeNotifier {
   Future<bool> makeReservation(BookingModel bookingData, String token) async {
     final bookingMap = bookingData.toJson();
     bookingMap.removeWhere((key, value) => key == "_id");
-    bookingMap.removeWhere((key, value) => key == "user");
     bookingMap.removeWhere((key, value) => key == "booking_status");
     bookingMap.removeWhere((key, value) => key == "table_detail");
     bookingMap.removeWhere((key, value) => key == "user_detail");
@@ -105,6 +104,31 @@ class BookingProvider extends ChangeNotifier {
     }
   }
 
+  Future<List<BookingModel>> getCustomerBooking(token) async {
+    List<BookingModel> result = [];
+    String tok = 'Bearer $token';
+
+    try {
+      final response = await get(
+        Uri.parse(AppUrl.getMyBooking),
+        headers: {
+          'Authorization': tok,
+        },
+      );
+      if (response.statusCode == 200) {
+        BookingModel bookData;
+        List<dynamic> l = json.decode(response.body);
+        for (var m in l) {
+          bookData = BookingModel.fromJson(m);
+          result.add(bookData);
+        }
+      }
+      return result;
+    } catch (e) {
+      return result;
+    }
+  }
+
   Future<bool> deleteBooking(itemId, token) async {
     String tok = 'Bearer $token';
     try {
@@ -157,6 +181,11 @@ class BookingProvider extends ChangeNotifier {
 
   setBusinessBooking(token) async {
     _booking = await getBusinessBooking(token);
+    notifyListeners();
+  }
+
+  setCustomerBooking(token) async {
+    _booking = await getCustomerBooking(token);
     notifyListeners();
   }
 }
