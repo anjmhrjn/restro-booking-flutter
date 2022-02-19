@@ -8,6 +8,7 @@ part 'booking_model.g.dart';
 class BookingModel {
   @JsonKey(name: '_id')
   final String id;
+  final String? created_date;
   final String? requested_for;
   final String? start_time;
   final String? end_time;
@@ -20,6 +21,7 @@ class BookingModel {
 
   BookingModel({
     this.id = '',
+    this.created_date,
     this.requested_for,
     this.start_time,
     this.end_time,

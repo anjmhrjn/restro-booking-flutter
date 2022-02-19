@@ -151,134 +151,135 @@ class _RestaurantListState extends State<RestaurantList> {
     final usrMdl = Provider.of<UserProvider>(context);
 
     return Scaffold(
-        backgroundColor: Color(0xFFF6F2EC),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF004194),
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.zero,
-                      bottom: Radius.circular(35),
-                    ),
+      backgroundColor: Color(0xFFF6F2EC),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color(0xFF004194),
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.zero,
+                    bottom: Radius.circular(35),
                   ),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 15,
-                            left: 20,
+                ),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 15,
+                          left: 20,
+                        ),
+                        child: Text(
+                          'Restaurants',
+                          style: TextStyle(
+                            color: Color(0xFFF6F2EC),
+                            fontSize: 27,
+                            fontWeight: FontWeight.w500,
                           ),
-                          child: Text(
-                            'Restaurants',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        left: 20,
+                        right: 20,
+                        bottom: 20,
+                      ),
+                      child: Container(
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEE6A3E),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Form(
+                          key: formkey,
+                          child: TextFormField(
+                            onFieldSubmitted: (value) {
+                              if (formkey.currentState!.validate()) {
+                                formkey.currentState!.save();
+                                String token = usrMdl.user.token!;
+                                String userId = usrMdl.user.userId!;
+                                resMdl.searchRestaurant(name, token);
+                              }
+                            },
+                            onSaved: (value) {
+                              name = value!;
+                            },
                             style: TextStyle(
                               color: Color(0xFFF6F2EC),
-                              fontSize: 27,
-                              fontWeight: FontWeight.w500,
                             ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 10,
-                          left: 20,
-                          right: 20,
-                          bottom: 20,
-                        ),
-                        child: Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEE6A3E),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Form(
-                            key: formkey,
-                            child: TextFormField(
-                              onFieldSubmitted: (value) {
-                                if (formkey.currentState!.validate()) {
-                                  formkey.currentState!.save();
-                                  String token = usrMdl.user.token!;
-                                  String userId = usrMdl.user.userId!;
-                                  resMdl.searchRestaurant(name, token);
-                                }
-                              },
-                              onSaved: (value) {
-                                name = value!;
-                              },
-                              style: TextStyle(
+                            decoration: InputDecoration(
+                              hintStyle: TextStyle(
                                 color: Color(0xFFF6F2EC),
                               ),
-                              decoration: InputDecoration(
-                                hintStyle: TextStyle(
-                                  color: Color(0xFFF6F2EC),
+                              fillColor: Color(0xFFEE6A3E),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Color(0xFFEE6A3E),
                                 ),
-                                fillColor: Color(0xFFEE6A3E),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFFEE6A3E),
-                                  ),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  vertical: 0,
-                                  horizontal: 10,
-                                ),
-                                hintText: 'Search',
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  size: 18,
-                                  color: Color(0xFFF6F2EC),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 0,
+                                horizontal: 10,
+                              ),
+                              hintText: 'Search',
+                              prefixIcon: Icon(
+                                Icons.search,
+                                size: 18,
+                                color: Color(0xFFF6F2EC),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 20,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: 15,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    bottom: 15,
-                  ),
-                  child: Consumer<RestaurantProvider>(
-                    builder: (context, value, child) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: value.restaurants.length,
-                        itemBuilder: (context, index) {
-                          return menuCard(context, value.restaurants[index]);
-                        },
-                      );
-                    },
-                  ),
-                  // child: ListView.builder(
-                  //   itemCount: menuList.length,
-                  //   shrinkWrap: true,
-                  //   scrollDirection: Axis.vertical,
-                  //   itemBuilder: (BuildContext context, int index) {
-                  //     return menuCard(context, menuList[index]);
-                  //   },
-                  // ),
-                )
-              ],
-            ),
+                child: Consumer<RestaurantProvider>(
+                  builder: (context, value, child) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: value.restaurants.length,
+                      itemBuilder: (context, index) {
+                        return menuCard(context, value.restaurants[index]);
+                      },
+                    );
+                  },
+                ),
+                // child: ListView.builder(
+                //   itemCount: menuList.length,
+                //   shrinkWrap: true,
+                //   scrollDirection: Axis.vertical,
+                //   itemBuilder: (BuildContext context, int index) {
+                //     return menuCard(context, menuList[index]);
+                //   },
+                // ),
+              )
+            ],
           ),
         ),
-        bottomNavigationBar: getCustomerBottomNavBar(context));
+      ),
+      bottomNavigationBar: getCustomerBottomNavBar(context),
+    );
   }
 }

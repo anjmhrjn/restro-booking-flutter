@@ -8,10 +8,11 @@ part of 'booking_model.dart';
 
 BookingModel _$BookingModelFromJson(Map<String, dynamic> json) => BookingModel(
       id: json['_id'] as String? ?? '',
+      created_date: json['created_date'] as String?,
       requested_for: json['requested_for'] as String?,
       start_time: json['start_time'] as String?,
       end_time: json['end_time'] as String?,
-      total_seats: json['total_seats'] as String?,
+      total_seats: json['total_seats'].toString(),
       table: json['table'] as String?,
       user: json['user'] as String?,
       booking_status: json['booking_status'] as String?,
@@ -26,6 +27,7 @@ BookingModel _$BookingModelFromJson(Map<String, dynamic> json) => BookingModel(
 Map<String, dynamic> _$BookingModelToJson(BookingModel instance) =>
     <String, dynamic>{
       '_id': instance.id,
+      'created_date': instance.created_date,
       'requested_for': instance.requested_for,
       'start_time': instance.start_time,
       'end_time': instance.end_time,

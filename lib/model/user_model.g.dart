@@ -15,13 +15,13 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       name: json['name'] as String?,
       bio: json['bio'] as String?,
       user_image: json['user_image'] as String?,
-      address: json['address'] as String?,
-      phone: json['phone'] as String?,
+      address: json['address'].toString(),
+      phone: json['phone'].toString(),
       isSuperUser: json['isSuperUser'] as bool? ?? false,
       isActive: json['isActive'] as bool? ?? false,
       isVerified: json['isVerified'] as bool? ?? false,
       firstLogin: json['firstLogin'] as bool? ?? false,
-      age: json['age'] as String?,
+      age: json['age'].toString(),
       gender: json['gender'] as String?,
       tables: (json['tables'] as List<dynamic>?)
           ?.map((e) => TableModel.fromJson(e as Map<String, dynamic>))

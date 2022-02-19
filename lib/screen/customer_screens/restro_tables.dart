@@ -33,7 +33,7 @@ class _RestroTablesState extends State<RestroTables> {
   //   return result;
   // }
 
-  Widget createCard(TableModel table) {
+  Widget createCard(TableModel table, String userId) {
     return table.is_available!
         ? Padding(
             padding: const EdgeInsets.only(bottom: 25),
@@ -75,7 +75,16 @@ class _RestroTablesState extends State<RestroTables> {
                   ),
                   subtitle: Center(
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/reserve-table',
+                          arguments: {
+                            "table_id": table.id,
+                            "restro_id": userId
+                          },
+                        );
+                      },
                       icon: Icon(Icons.check_box_outlined),
                       label: Text('Book Now'),
                       style: ElevatedButton.styleFrom(
@@ -176,7 +185,7 @@ class _RestroTablesState extends State<RestroTables> {
                   shrinkWrap: true,
                   itemCount: tables!.length,
                   itemBuilder: (context, index) {
-                    return createCard(tables[index]);
+                    return createCard(tables[index], args['id']);
                   },
                 ),
                 // child: Consumer<TableProvider>(

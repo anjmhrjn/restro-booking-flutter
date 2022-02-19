@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:restro_booking/model/item_model.dart';
+import 'package:restro_booking/model/table_model.dart';
 import 'package:restro_booking/model/user_model.dart';
 import 'package:restro_booking/utility/app_url.dart';
 
@@ -63,6 +64,19 @@ class RestaurantProvider extends ChangeNotifier {
 
   User findById(String id) {
     return _restaurants.firstWhere((element) => element.id == id);
+  }
+
+  TableModel findTableById(String id) {
+    // return _restaurants.firstWhere((element) => element.id == id);
+    TableModel tm = TableModel();
+    _restaurants.forEach((element) {
+      element.tables!.forEach((table) {
+        if (table.id == id) {
+          tm = table;
+        }
+      });
+    });
+    return tm;
   }
 
   void getAllRestaurants(token) async {

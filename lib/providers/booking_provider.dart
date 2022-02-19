@@ -12,9 +12,13 @@ class BookingProvider extends ChangeNotifier {
 
   List<BookingModel> get booking => _booking;
 
-  Future<bool> addItem(BookingModel bookingData, String token) async {
+  Future<bool> makeReservation(BookingModel bookingData, String token) async {
     final bookingMap = bookingData.toJson();
     bookingMap.removeWhere((key, value) => key == "_id");
+    bookingMap.removeWhere((key, value) => key == "user");
+    bookingMap.removeWhere((key, value) => key == "booking_status");
+    bookingMap.removeWhere((key, value) => key == "table_detail");
+    bookingMap.removeWhere((key, value) => key == "user_detail");
     try {
       String tok = 'Bearer $token';
       final response = await post(
@@ -22,7 +26,8 @@ class BookingProvider extends ChangeNotifier {
         body: bookingMap,
         headers: {'Authorization': tok},
       );
-      if (response.statusCode == 200) {
+      Map<String, dynamic> resp = json.decode(response.body);
+      if (resp['success']) {
         return true;
       } else {
         return false;

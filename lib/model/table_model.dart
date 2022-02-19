@@ -5,6 +5,7 @@ part 'table_model.g.dart';
 
 @JsonSerializable()
 class TableModel {
+  @JsonKey(name: '_id')
   final String id;
   final String? min_capacity;
   final String? max_capacity;
@@ -29,4 +30,6 @@ class TableModel {
 
   factory TableModel.fromJson(Map<String, dynamic> json) =>
       _$TableModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TableModelToJson(this);
 }

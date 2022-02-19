@@ -19,6 +19,7 @@ import 'package:restro_booking/screen/business_screens/update_item.dart';
 import 'package:restro_booking/screen/business_screens/update_table.dart';
 import 'package:restro_booking/screen/business_screens/view_item.dart';
 import 'package:restro_booking/screen/customer_screens/my_booking.dart';
+import 'package:restro_booking/screen/customer_screens/reserve_table.dart';
 import 'package:restro_booking/screen/customer_screens/restaurant_list.dart';
 import 'package:restro_booking/screen/customer_screens/restro_tables.dart';
 import 'package:restro_booking/screen/dashboard.dart';
@@ -54,29 +55,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RestaurantProvider()),
       ],
       child: MaterialApp(
-        onGenerateRoute: (settings) {
-          // If you push the PassArguments route
-          if (settings.name == '/restro-items') {
-            // Cast the arguments to the correct
-            // type: ScreenArguments.
-            final args = settings.arguments as Map;
-
-            // Then, extract the required data from
-            // the arguments and pass the data to the
-            // correct screen.
-            return MaterialPageRoute(
-              builder: (context) {
-                return MenuItems(
-                  id: args['id'],
-                );
-              },
-            );
-          }
-          assert(false, 'Need to implement ${settings.name}');
-          return null;
-        },
         initialRoute: '/login',
         routes: {
+          '/': (context) => LoginScreen(),
           '/login': (context) => LoginScreen(),
           '/register': (context) => RegisterScreen(),
           '/account': (context) => AccountScreen(),
@@ -100,7 +81,28 @@ class MyApp extends StatelessWidget {
           '/restaurant': (context) => RestaurantList(),
           '/my-reservations': (context) => MyBookingsScreen(),
           '/restro-tables': (context) => RestroTables(),
-          // '/restro-items': (context) => MenuItems(),
+          '/reserve-table': (context) => ReserveTable(),
+        },
+        onGenerateRoute: (settings) {
+          // If you push the PassArguments route
+          if (settings.name == '/restro-items') {
+            // Cast the arguments to the correct
+            // type: ScreenArguments.
+            final args = settings.arguments as Map;
+
+            // Then, extract the required data from
+            // the arguments and pass the data to the
+            // correct screen.
+            return MaterialPageRoute(
+              builder: (context) {
+                return MenuItems(
+                  id: args['id'],
+                );
+              },
+            );
+          }
+          assert(false, 'Need to implement ${settings.name}');
+          return null;
         },
         // home: BookTable(),
         // home: MenuItems(),

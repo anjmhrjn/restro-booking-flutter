@@ -182,6 +182,36 @@ Widget getTablesForm(BuildContext context) {
             ),
           ],
         ),
+        ElevatedButton(
+          onPressed: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                'Book Now',
+                textScaleFactor: 1.2,
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              Icon(
+                Icons.check_box_outlined,
+                size: 19,
+              ),
+            ],
+          ),
+          style: ElevatedButton.styleFrom(
+            // primary: Color(0xFFEE6A3E),
+            primary: Color(0xFF004194),
+            minimumSize: const Size(double.infinity, 40),
+            padding: EdgeInsets.all(8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+            ),
+          ),
+        ),
       ],
     ),
   );
