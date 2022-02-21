@@ -38,6 +38,11 @@ class BookingProvider extends ChangeNotifier {
 
   Future<bool> updateBooking(BookingModel bookingData, String token) async {
     final Map<String, dynamic> bookingMap = bookingData.toJson();
+    bookingMap.removeWhere((key, value) => key == "_id");
+    bookingMap.removeWhere((key, value) => key == "booking_status");
+    bookingMap.removeWhere((key, value) => key == "table_detail");
+    bookingMap.removeWhere((key, value) => key == "user_detail");
+
     try {
       String tok = 'Bearer $token';
       Response response = await put(

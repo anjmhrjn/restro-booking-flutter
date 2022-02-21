@@ -128,7 +128,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
-                        '/update-status',
+                        '/update-booking',
                         arguments: {"id": booking.id},
                       );
                     },

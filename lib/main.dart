@@ -22,6 +22,7 @@ import 'package:restro_booking/screen/customer_screens/my_booking.dart';
 import 'package:restro_booking/screen/customer_screens/reserve_table.dart';
 import 'package:restro_booking/screen/customer_screens/restaurant_list.dart';
 import 'package:restro_booking/screen/customer_screens/restro_tables.dart';
+import 'package:restro_booking/screen/customer_screens/update_booking.dart';
 import 'package:restro_booking/screen/dashboard.dart';
 import 'package:restro_booking/screen/business_screens/itemScreen.dart';
 import 'package:restro_booking/screen/business_screens/table_add.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
           '/my-reservations': (context) => MyBookingsScreen(),
           '/restro-tables': (context) => RestroTables(),
           '/reserve-table': (context) => ReserveTable(),
+          '/update-booking': (context) => UpdateBookingScreen(),
         },
         onGenerateRoute: (settings) {
           // If you push the PassArguments route
