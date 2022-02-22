@@ -12,7 +12,8 @@ class BookingProvider extends ChangeNotifier {
 
   List<BookingModel> get booking => _booking;
 
-  Future<bool> makeReservation(BookingModel bookingData, String token) async {
+  Future<bool> makeReservation(
+      BookingModel bookingData, String token, Client client) async {
     final bookingMap = bookingData.toJson();
     bookingMap.removeWhere((key, value) => key == "_id");
     bookingMap.removeWhere((key, value) => key == "booking_status");
@@ -20,7 +21,7 @@ class BookingProvider extends ChangeNotifier {
     bookingMap.removeWhere((key, value) => key == "user_detail");
     try {
       String tok = 'Bearer $token';
-      final response = await post(
+      final response = await client.post(
         Uri.parse(AppUrl.bookTable),
         body: bookingMap,
         headers: {'Authorization': tok},
