@@ -71,7 +71,11 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
-  Future<Map<String, dynamic>> login(String username, String password) async {
+  Future<Map<String, dynamic>> login(
+    String username,
+    String password,
+    Client client,
+  ) async {
     var result;
 
     final Map<String, dynamic> loginData = {
@@ -80,8 +84,7 @@ class AuthProvider extends ChangeNotifier {
     };
     _loggedInStatus = Status.Authenticating;
     notifyListeners();
-
-    Response response = await post(
+    Response response = await client.post(
       Uri.parse(AppUrl.login),
       body: json.encode(loginData),
       headers: {

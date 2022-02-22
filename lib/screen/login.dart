@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:restro_booking/model/userDetails.dart';
@@ -146,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           final Future<Map<String, dynamic>> response =
-                              auth.login(username, password);
+                              auth.login(username, password, Client());
                           response.then((response) {
                             if (response['status']) {
                               UserDetails user = response['user'];
