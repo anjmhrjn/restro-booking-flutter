@@ -97,11 +97,11 @@ class TableProvider extends ChangeNotifier {
     }
   }
 
-  Future<List<TableModel>> getMyTablesData(userId, token) async {
+  Future<List<TableModel>> getMyTablesData(userId, token, Client client) async {
     List<TableModel> result = [];
     String tok = 'Bearer $token';
     try {
-      final response = await get(
+      final response = await client.get(
         Uri.parse(AppUrl.myTables + userId + "/"),
         headers: {
           'Authorization': tok,
@@ -147,7 +147,7 @@ class TableProvider extends ChangeNotifier {
   }
 
   getMyTables(userId, token) async {
-    _table = await getMyTablesData(userId, token);
+    _table = await getMyTablesData(userId, token, Client());
     notifyListeners();
   }
 }
