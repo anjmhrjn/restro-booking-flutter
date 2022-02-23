@@ -65,9 +65,23 @@ class _AccountScreenState extends State<AccountScreen> {
                   color: Colors.black,
                 ),
                 TextButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/update-profile');
+                  },
                   icon: Icon(Icons.person_sharp),
                   label: Text('Edit Profile'),
+                  style: TextButton.styleFrom(
+                    primary: Colors.black,
+                    minimumSize: const Size(double.infinity, 40),
+                    padding: EdgeInsets.all(10),
+                  ),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/change-psw');
+                  },
+                  icon: Icon(Icons.settings),
+                  label: Text('Setting'),
                   style: TextButton.styleFrom(
                     primary: Colors.black,
                     minimumSize: const Size(double.infinity, 40),

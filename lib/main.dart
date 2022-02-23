@@ -7,6 +7,7 @@ import 'package:restro_booking/providers/category_provider.dart';
 import 'package:restro_booking/providers/item_provider.dart';
 import 'package:restro_booking/providers/restaurant_provider.dart';
 import 'package:restro_booking/providers/table_provider.dart';
+import 'package:restro_booking/providers/user_profile_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/account.dart';
 import 'package:restro_booking/screen/book.dart';
@@ -18,6 +19,7 @@ import 'package:restro_booking/screen/business_screens/update_booking_status.dar
 import 'package:restro_booking/screen/business_screens/update_item.dart';
 import 'package:restro_booking/screen/business_screens/update_table.dart';
 import 'package:restro_booking/screen/business_screens/view_item.dart';
+import 'package:restro_booking/screen/change_password.dart';
 import 'package:restro_booking/screen/customer_screens/my_booking.dart';
 import 'package:restro_booking/screen/customer_screens/reserve_table.dart';
 import 'package:restro_booking/screen/customer_screens/restaurant_list.dart';
@@ -33,6 +35,7 @@ import 'package:restro_booking/screen/restroList.dart';
 import 'package:restro_booking/screen/customer_screens/restro_profile.dart';
 import 'package:restro_booking/screen/business_screens/tableScreen.dart';
 import 'package:restro_booking/screen/business_screens/table_bulk.dart';
+import 'package:restro_booking/screen/update_profile.dart';
 import 'package:restro_booking/utility/shared_preference.dart';
 
 void main() {
@@ -54,6 +57,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ItemProvider()),
         ChangeNotifierProvider(create: (_) => BookingProvider()),
         ChangeNotifierProvider(create: (_) => RestaurantProvider()),
+        ChangeNotifierProvider(create: (_) => UserProfileProvider()),
       ],
       child: MaterialApp(
         initialRoute: '/login',
@@ -62,6 +66,8 @@ class MyApp extends StatelessWidget {
           '/login': (context) => LoginScreen(),
           '/register': (context) => RegisterScreen(),
           '/account': (context) => AccountScreen(),
+          '/update-profile': (context) => ProfileUpdateScreen(),
+          '/change-psw': (context) => ChangePasswordScreen(),
           '/addTable': (context) => TableAdd(),
           '/bulkAddTable': (context) => TableBulkAdd(),
           '/restro-profile': (context) => RestroProfile(),

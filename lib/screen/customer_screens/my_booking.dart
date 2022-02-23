@@ -2,6 +2,7 @@ import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/dropdown/gf_multiselect.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:restro_booking/providers/booking_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
@@ -26,6 +27,13 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
     final bkgMdl = Provider.of<BookingProvider>(context, listen: false);
     final usrMdl = Provider.of<UserProvider>(context, listen: false);
     bkgMdl.setCustomerBooking(usrMdl.user.token);
+  }
+
+  Future<bool> delReservation(bookingId) async {
+    final bknMdl = Provider.of<BookingProvider>(context, listen: false);
+    final usrMdl = Provider.of<UserProvider>(context, listen: false);
+    final result = await bknMdl.deleteBooking(bookingId, usrMdl.user.token);
+    return result;
   }
 
   Widget createCard(booking) {
@@ -134,23 +142,23 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                     },
                     color: Color(0xFF004194),
                   ),
-                  // IconButton(
-                  //   onPressed: () async {
-                  //     // var deleted = await delTable(table.id);
-                  //     // if (deleted) {
-                  //     //   MotionToast.success(
-                  //     //     description: Text('Table Deleted'),
-                  //     //   ).show(context);
-                  //     // } else {
-                  //     //   MotionToast.error(
-                  //     //     description: Text('Error in deleting table'),
-                  //     //   ).show(context);
-                  //     // }
-                  //   },
-                  //   icon: Icon(Icons.delete),
-                  //   tooltip: 'Delete Table',
-                  //   color: Colors.red,
-                  // ),
+                  IconButton(
+                    onPressed: () async {
+                      var deleted = await delReservation(booking.id);
+                      if (deleted) {
+                        MotionToast.success(
+                          description: Text('Reservation Deleted'),
+                        ).show(context);
+                      } else {
+                        MotionToast.error(
+                          description: Text('Error in deleting Reservation'),
+                        ).show(context);
+                      }
+                    },
+                    icon: Icon(Icons.delete),
+                    tooltip: 'Delete Reservation',
+                    color: Colors.red,
+                  ),
                 ],
               ),
             ),

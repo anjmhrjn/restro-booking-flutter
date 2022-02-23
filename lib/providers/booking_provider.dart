@@ -135,17 +135,17 @@ class BookingProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> deleteBooking(itemId, token) async {
+  Future<bool> deleteBooking(bookingId, token) async {
     String tok = 'Bearer $token';
     try {
       final response = await delete(
-        Uri.parse(AppUrl.deleteItem + itemId),
+        Uri.parse(AppUrl.deleteBooking + bookingId),
         headers: {
           'Authorization': tok,
         },
       );
       if (response.statusCode == 204) {
-        _booking.removeWhere((element) => element.id == itemId);
+        _booking.removeWhere((element) => element.id == bookingId);
         notifyListeners();
         return true;
       }

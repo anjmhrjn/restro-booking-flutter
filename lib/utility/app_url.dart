@@ -1,8 +1,12 @@
 class AppUrl {
   static const String baseUrl = 'http://10.0.2.2:80';
+  // static const String baseUrl = 'http://127.0.0.1:80';
 
   static const String login = baseUrl + '/user/login';
   static const String register = baseUrl + '/user/register';
+  static const String getProfile = baseUrl + '/user-profile/';
+  static const String updateProfile = baseUrl + '/profile/update/';
+  static const String changePsw = baseUrl + '/change-password';
   static const String tableAdd = baseUrl + '/table/add';
   static const String tableBulkAdd = baseUrl + '/table/bulk/add';
   static const String myTables = baseUrl + '/table/user/';
@@ -26,6 +30,7 @@ class AppUrl {
   static const String searchRestro = baseUrl + '/search-restaurant/';
   static const String getRestroItems = baseUrl + '/users-items/';
   static const String getMyBooking = baseUrl + '/my-bookings';
+  static const String deleteBooking = baseUrl + '/booking/delete/';
 
   ///booking/update-status/
 }
