@@ -13,13 +13,14 @@ class CategoryProvider extends ChangeNotifier {
 
   List<CategoryModel> get category => _category;
 
-  Future<bool> addCategory(CategoryModel catData, String token) async {
+  Future<bool> addCategory(
+      CategoryModel catData, String token, Client client) async {
     final Map<String, dynamic> categoryMap = {
       "name": catData.name,
     };
     try {
       String tok = 'Bearer $token';
-      Response response = await post(
+      Response response = await client.post(
         Uri.parse(AppUrl.addCategory),
         body: categoryMap,
         headers: {'Authorization': tok},
@@ -87,7 +88,7 @@ class CategoryProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> deleteTable(categoryId, token) async {
+  Future<bool> deleteCategory(categoryId, token) async {
     String tok = 'Bearer $token';
     try {
       final response = await delete(

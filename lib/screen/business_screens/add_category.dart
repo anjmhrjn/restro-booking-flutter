@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:restro_booking/model/category_model.dart';
@@ -76,7 +77,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                           name: name,
                         );
                         final bool response =
-                            await catMdl.addCategory(cm, token);
+                            await catMdl.addCategory(cm, token, Client());
                         if (response) {
                           formkey.currentState!.reset();
                           Navigator.pushNamed(context, '/add-item');

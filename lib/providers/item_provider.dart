@@ -75,7 +75,8 @@ class ItemProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> updateItem(ItemModel itemData, String token) async {
+  Future<bool> updateItem(
+      ItemModel itemData, String token, Client client) async {
     final Map<String, dynamic> itemMap = itemData.toJson();
     itemMap.remove("_id");
     itemMap.remove("categories");
@@ -84,7 +85,7 @@ class ItemProvider extends ChangeNotifier {
     itemMap.remove("user_info");
     try {
       String tok = 'Bearer $token';
-      Response response = await put(
+      Response response = await client.put(
         Uri.parse(AppUrl.updateItem + itemData.id),
         body: itemMap,
         headers: {'Authorization': tok},

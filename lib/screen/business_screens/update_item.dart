@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:getwidget/components/dropdown/gf_multiselect.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
@@ -215,10 +216,8 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
                           description: description,
                           itemOf: userId,
                         );
-                        final bool response = await itemMdl.updateItem(
-                          im,
-                          token,
-                        );
+                        final bool response =
+                            await itemMdl.updateItem(im, token, Client());
                         // final bool response = false;
                         if (response) {
                           Navigator.pushNamed(context, '/my-items');
