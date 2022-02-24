@@ -12,6 +12,7 @@ class RestroProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     final usrMdl = Provider.of<UserProvider>(context, listen: false);
 
     RestaurantProvider usrPrv = Provider.of<RestaurantProvider>(context);
@@ -232,7 +233,7 @@ class RestroProfile extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 3,
+                      height: size.height * 0.01,
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(

@@ -130,17 +130,43 @@ class _MenuItemsState extends State<MenuItems> {
     itemMdl.setRestroItems(id, usrMdl.user.token);
   }
 
+  Widget smallScreenWidget(value) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: value.item.length,
+      itemBuilder: (context, index) {
+        return menuCard(context, value.item[index]);
+      },
+    );
+  }
+
+  Widget bigScreenWidget(value, size) {
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
+    final double itemWidth = size.width / 2;
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: GridView.count(
+        // controller:
+        //     new ScrollController(keepScrollOffset: false),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        childAspectRatio: (itemWidth / itemHeight),
+        crossAxisCount: 2,
+        crossAxisSpacing: 15.0,
+        mainAxisSpacing: 10.0,
+        children: List.generate(value.item.length, (index) {
+          return menuCard(context, value.item[index]);
+        }),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     RestaurantProvider usrPrv = Provider.of<RestaurantProvider>(context);
 
     final User restroData = usrPrv.findById(widget.id!);
-    const List<String> category_list = [
-      "Starters",
-      "Appetizers",
-      "Pizza",
-      "Desert"
-    ];
 
     return Scaffold(
       body: SafeArea(
@@ -224,23 +250,11 @@ class _MenuItemsState extends State<MenuItems> {
                 ),
                 child: Consumer<ItemProvider>(
                   builder: (context, value, child) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: value.item.length,
-                      itemBuilder: (context, index) {
-                        return menuCard(context, value.item[index]);
-                      },
-                    );
+                    return size.width > 600
+                        ? bigScreenWidget(value, size)
+                        : smallScreenWidget(value);
                   },
                 ),
-                // child: ListView.builder(
-                //   itemCount: menuList.length,
-                //   shrinkWrap: true,
-                //   scrollDirection: Axis.vertical,
-                //   itemBuilder: (BuildContext context, int index) {
-                //     return menuCard(context, menuList[index]);
-                //   },
-                // ),
               )
             ],
           ),

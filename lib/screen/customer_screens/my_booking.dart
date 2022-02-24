@@ -124,43 +124,44 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                   height: 5,
                 ),
                 Text('Status: ${booking.booking_status}'),
+                Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        tooltip: 'Change Status',
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/update-booking',
+                            arguments: {"id": booking.id},
+                          );
+                        },
+                        color: Color(0xFF004194),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          var deleted = await delReservation(booking.id);
+                          if (deleted) {
+                            MotionToast.success(
+                              description: Text('Reservation Deleted'),
+                            ).show(context);
+                          } else {
+                            MotionToast.error(
+                              description:
+                                  Text('Error in deleting Reservation'),
+                            ).show(context);
+                          }
+                        },
+                        icon: Icon(Icons.delete),
+                        tooltip: 'Delete Reservation',
+                        color: Colors.red,
+                      ),
+                    ],
+                  ),
+                ),
               ],
-            ),
-            subtitle: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    tooltip: 'Change Status',
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/update-booking',
-                        arguments: {"id": booking.id},
-                      );
-                    },
-                    color: Color(0xFF004194),
-                  ),
-                  IconButton(
-                    onPressed: () async {
-                      var deleted = await delReservation(booking.id);
-                      if (deleted) {
-                        MotionToast.success(
-                          description: Text('Reservation Deleted'),
-                        ).show(context);
-                      } else {
-                        MotionToast.error(
-                          description: Text('Error in deleting Reservation'),
-                        ).show(context);
-                      }
-                    },
-                    icon: Icon(Icons.delete),
-                    tooltip: 'Delete Reservation',
-                    color: Colors.red,
-                  ),
-                ],
-              ),
             ),
           ),
         ),
@@ -168,8 +169,40 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
     );
   }
 
+  Widget smallScreenWidget(value) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: value.booking.length,
+      itemBuilder: (context, index) {
+        return createCard(value.booking[index]);
+      },
+    );
+  }
+
+  Widget bigScreenWidget(value, size) {
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 1.6;
+    final double itemWidth = size.width / 2;
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: GridView.count(
+        // controller:
+        //     new ScrollController(keepScrollOffset: false),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        childAspectRatio: (itemWidth / itemHeight),
+        crossAxisCount: 2,
+        crossAxisSpacing: 15.0,
+        mainAxisSpacing: 10.0,
+        children: List.generate(value.booking.length, (index) {
+          return createCard(value.booking[index]);
+        }),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     final usrMdl = Provider.of<UserProvider>(context);
     BookingProvider bknMdl = Provider.of<BookingProvider>(context);
     final _items = [
@@ -384,13 +417,16 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                   ),
                   child: Consumer<BookingProvider>(
                     builder: (context, value, child) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: value.booking.length,
-                        itemBuilder: (context, index) {
-                          return createCard(value.booking[index]);
-                        },
-                      );
+                      return size.width > 600
+                          ? bigScreenWidget(value, size)
+                          : smallScreenWidget(value);
+                      // return ListView.builder(
+                      //   shrinkWrap: true,
+                      //   itemCount: value.booking.length,
+                      //   itemBuilder: (context, index) {
+                      //     return createCard(value.booking[index]);
+                      //   },
+                      // );
                     },
                   ),
                 ),

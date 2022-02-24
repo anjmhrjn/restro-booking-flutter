@@ -47,6 +47,37 @@ class _RestaurantListState extends State<RestaurantList> {
     resMdl.getAllRestaurants(usrMdl.user.token);
   }
 
+  Widget smallScreenWidget(value) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: value.restaurants.length,
+      itemBuilder: (context, index) {
+        return menuCard(context, value.restaurants[index]);
+      },
+    );
+  }
+
+  Widget bigScreenWidget(value, size) {
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 5;
+    final double itemWidth = size.width / 2;
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: GridView.count(
+        // controller:
+        //     new ScrollController(keepScrollOffset: false),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        childAspectRatio: (itemWidth / itemHeight),
+        crossAxisCount: 2,
+        crossAxisSpacing: 15.0,
+        mainAxisSpacing: 10.0,
+        children: List.generate(value.restaurants.length, (index) {
+          return menuCard(context, value.restaurants[index]);
+        }),
+      ),
+    );
+  }
+
   Widget menuCard(BuildContext context, User restrodetail) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
@@ -147,6 +178,7 @@ class _RestaurantListState extends State<RestaurantList> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     final resMdl = Provider.of<RestaurantProvider>(context);
     final usrMdl = Provider.of<UserProvider>(context);
 
@@ -257,13 +289,16 @@ class _RestaurantListState extends State<RestaurantList> {
                 ),
                 child: Consumer<RestaurantProvider>(
                   builder: (context, value, child) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: value.restaurants.length,
-                      itemBuilder: (context, index) {
-                        return menuCard(context, value.restaurants[index]);
-                      },
-                    );
+                    return size.width > 600
+                        ? bigScreenWidget(value, size)
+                        : smallScreenWidget(value);
+                    // return ListView.builder(
+                    //   shrinkWrap: true,
+                    //   itemCount: value.restaurants.length,
+                    //   itemBuilder: (context, index) {
+                    //     return menuCard(context, value.restaurants[index]);
+                    //   },
+                    // );
                   },
                 ),
                 // child: ListView.builder(
