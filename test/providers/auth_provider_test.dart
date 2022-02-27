@@ -31,5 +31,27 @@ void main() {
         isA<Map<String, dynamic>>(),
       );
     });
+
+    test('returns map value if the http call completes successfully for login',
+        () async {
+      final client = MockClient();
+      when(client.post(
+        Uri.parse(AppUrl.login),
+        body: '{"username":"wrong","password":"wrong"}',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Basic ZGlzYXBpdXNlcjpkaXMjMTIz',
+          // 'X-ApiKey' : 'ZGlzIzEyMw=='
+        },
+      )).thenAnswer((_) async => http.Response(
+          // userdetails key is required in login function
+          // it can contain dummy data but if it is not provided test fails
+          '{"message": "invalid credentials"}',
+          404));
+      expect(
+        await AuthProvider().login("anuj1", "qpalzm10", client),
+        isA<Map<String, dynamic>>(),
+      );
+    });
   });
 }
