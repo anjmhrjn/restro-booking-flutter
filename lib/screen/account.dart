@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,10 @@ import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/bottomNavBar.dart';
 import 'package:restro_booking/utility/app_url.dart';
 import 'package:restro_booking/utility/shared_preference.dart';
+import 'package:flutter/foundation.dart' as foundation;
+import 'package:proximity_sensor/proximity_sensor.dart';
+
+// import 'package:all_sensors/all_sensors.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -15,6 +20,54 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  bool _isNear = false;
+  late StreamSubscription<dynamic> _streamSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    listenSensor();
+  }
+
+  Future<void> listenSensor() async {
+    FlutterError.onError = (FlutterErrorDetails details) {
+      if (foundation.kDebugMode) {
+        FlutterError.dumpErrorToConsole(details);
+      }
+    };
+    _streamSubscription = ProximitySensor.events.listen((int event) {
+      setState(() {
+        _isNear = (event > 0) ? true : false;
+      });
+      if (_isNear) {
+        MotionToast.warning(description: Text('Too Close to the screen'))
+            .show(context);
+      }
+    });
+  }
+  // bool _proximityValues = false;
+  // List<StreamSubscription<dynamic>> _streamSubscriptions =
+  //     <StreamSubscription<dynamic>>[];
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
+  //     subscription.cancel();
+  //   }
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _streamSubscriptions.add(proximityEvents.listen((ProximityEvent event) {
+  //     setState(() {
+  //       _proximityValues = event.getValue();
+  //     });
+  //     print(_proximityValues);
+  //   }));
+  // }
+
   @override
   Widget build(BuildContext context) {
     final usrMdl = Provider.of<UserProvider>(context);
@@ -97,7 +150,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     UserPreferences().removeUser();
                     btmProvider.currentIndex = 0;
                     Navigator.pushNamed(context, '/login');
-                    MotionToast.success(description: Text('Logging you out!'));
+                    MotionToast.success(description: Text('Logging you out!'))
+                        .show(context);
                   },
                   icon: Icon(Icons.logout_outlined),
                   label: Text('Logout'),

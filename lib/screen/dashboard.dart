@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:restro_booking/model/userDetails.dart';
+import 'package:restro_booking/providers/btmnavigation_provider.dart';
 import 'package:restro_booking/providers/user_provider.dart';
 import 'package:restro_booking/screen/bottomNavBar.dart';
 import 'package:restro_booking/utility/shared_preference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shake/shake.dart';
 
 class UserDashboard extends StatefulWidget {
   const UserDashboard({Key? key}) : super(key: key);
@@ -24,6 +27,27 @@ class _UserDashboardState extends State<UserDashboard> {
   void initState() {
     super.initState();
     getUserDetails();
+    ShakeDetector detector = ShakeDetector.autoStart(
+      onPhoneShake: () {
+        final usrMdl = Provider.of<UserProvider>(context, listen: false);
+        final btmProvider =
+            Provider.of<BottomNavigationBarProvider>(context, listen: false);
+        usrMdl.setIsAuthenticated(false);
+        UserPreferences().removeUser();
+        btmProvider.currentIndex = 0;
+        Navigator.pushNamed(context, '/login');
+        MotionToast.success(
+          description: Text('Logging you out!'),
+        ).show(context);
+      },
+    );
+    // ShakeDetector detector = ShakeDetector.waitForStart(
+    //   onPhoneShake: () {
+    //     // Do stuff on phone shake
+
+    //   },
+    // );
+    // detector.startListening();
   }
 
   @override
