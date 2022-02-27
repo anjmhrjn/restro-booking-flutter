@@ -4,6 +4,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:restro_booking/database/database_instance.dart';
+import 'package:restro_booking/entity/table_entity.dart';
 import 'package:restro_booking/model/table_model.dart';
 import 'package:restro_booking/utility/app_url.dart';
 
@@ -97,9 +99,34 @@ class TableProvider extends ChangeNotifier {
     }
   }
 
+  insertData(TableEntity tableData) async {
+    final database = await DatabaseInstance.instance.getDatabaseInstance();
+    await database.tableDao.insertTables(tableData);
+  }
+
+  Future<List<TableEntity>> fetchData(String tableOf) async {
+    // final result = await widget.personDao.findAllPerson();
+    var database = await DatabaseInstance.instance.getDatabaseInstance();
+    var result = database.tableDao.findBusinessTables(tableOf);
+    return result;
+  }
+
+  delTable() async {
+    final database = await DatabaseInstance.instance.getDatabaseInstance();
+    await database.tableDao.deleteBusinessTables();
+  }
+
   Future<List<TableModel>> getMyTablesData(userId, token, Client client) async {
+    delTable();
     List<TableModel> result = [];
     String tok = 'Bearer $token';
+    final response = await client.get(
+      Uri.parse(AppUrl.myTables + userId + "/"),
+      headers: {
+        'Authorization': tok,
+      },
+    );
+
     try {
       final response = await client.get(
         Uri.parse(AppUrl.myTables + userId + "/"),
@@ -108,11 +135,20 @@ class TableProvider extends ChangeNotifier {
         },
       );
       if (response.statusCode == 200) {
+        String tableOf = '';
         TableModel item;
+        TableEntity te;
         Iterable l = json.decode(response.body);
         var i = 0;
         for (var m in l) {
           item = TableModel.fromJson(m);
+          te = TableEntity.fromJson(m);
+          insertData(te);
+          tableOf = m['tableOf'];
+        }
+        List<TableEntity> tableData = await fetchData(tableOf);
+        for (var td in tableData) {
+          item = TableModel.fromJson(td.toJson());
           result.add(item);
         }
       }
