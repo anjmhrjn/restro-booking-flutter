@@ -88,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       child: TextFormField(
+                        key: Key('username'),
                         onSaved: (value) {
                           username = value!;
                         },
@@ -123,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       child: TextFormField(
+                        key: Key('password'),
                         onSaved: (value) {
                           password = value!;
                         },

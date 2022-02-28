@@ -134,6 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ],
                     ),
                     child: DropdownButtonFormField(
+                      key: Key('dropdown'),
                       items: <String>['Customer', 'Business']
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
