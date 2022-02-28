@@ -12,6 +12,7 @@ import 'package:restro_booking/screen/bottomNavBar.dart';
 import 'package:restro_booking/screen/getTablesForm.dart';
 import 'package:restro_booking/model/info.dart';
 import 'package:date_field/date_field.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class ReserveTable extends StatefulWidget {
   const ReserveTable({Key? key}) : super(key: key);
@@ -21,6 +22,32 @@ class ReserveTable extends StatefulWidget {
 }
 
 class _ReserveTableState extends State<ReserveTable> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  onSelectNotification(String? payload) {}
+
+  showNotification() async {
+    var android = AndroidNotificationDetails('id', 'channel ',
+        channelDescription: "oleoleole",
+        priority: Priority.high,
+        importance: Importance.max);
+    var platform = new NotificationDetails(android: android);
+    await flutterLocalNotificationsPlugin.show(
+        0, 'Booking Confirmation', 'Reservation has been made', platform,
+        payload: 'Welcome to the Local Notification demo');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('account');
+    var initSetttings =
+        InitializationSettings(android: initializationSettingsAndroid);
+    flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: onSelectNotification);
+  }
+
   Widget getRestroInfo(BuildContext context, restroData, tableData) {
     var size = MediaQuery.of(context).size;
     var divisible_num = size.width > 600 ? 5 : 10;
@@ -247,10 +274,6 @@ class _ReserveTableState extends State<ReserveTable> {
                         initialDate: DateTime.now().add(
                           const Duration(days: 10),
                         ),
-                        autovalidateMode: AutovalidateMode.always,
-                        validator: (DateTime? e) => (e?.day ?? 0) == 1
-                            ? 'Please not the first day'
-                            : null,
                         onDateSelected: (DateTime value) {
                           requested_for = value.toString();
                         },
@@ -295,12 +318,6 @@ class _ReserveTableState extends State<ReserveTable> {
                               initialDate: DateTime.now().add(
                                 const Duration(days: 10),
                               ),
-                              autovalidateMode: AutovalidateMode.always,
-                              validator: (DateTime? e) {
-                                return (e?.day ?? 0) == 1
-                                    ? 'Please not the first day'
-                                    : null;
-                              },
                               onDateSelected: (DateTime value) {
                                 start_time = value.toString();
                               },
@@ -351,12 +368,6 @@ class _ReserveTableState extends State<ReserveTable> {
                               initialDate: DateTime.now().add(
                                 const Duration(days: 10),
                               ),
-                              autovalidateMode: AutovalidateMode.always,
-                              validator: (DateTime? e) {
-                                return (e?.day ?? 0) == 1
-                                    ? 'Please not the first day'
-                                    : null;
-                              },
                               onDateSelected: (DateTime value) {
                                 end_time = value.toString();
                               },
@@ -390,6 +401,7 @@ class _ReserveTableState extends State<ReserveTable> {
                                 bm, usrMdl.user.token!, Client());
                             // final bool response = false;
                             if (response) {
+                              showNotification();
                               formkey.currentState!.reset();
                               MotionToast.success(
                                 description: Text('Reservation success'),

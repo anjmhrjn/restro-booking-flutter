@@ -1,5 +1,5 @@
 class AppUrl {
-  static const String baseUrl = 'http://192.168.1.5:80';
+  static const String baseUrl = 'http://192.168.1.3:80';
   // static const String baseUrl = 'http://10.0.2.2:80';
   // static const String baseUrl = 'http://127.0.0.1:80';
 
