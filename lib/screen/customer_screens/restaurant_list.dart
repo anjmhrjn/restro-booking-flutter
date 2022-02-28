@@ -232,6 +232,7 @@ class _RestaurantListState extends State<RestaurantList> {
                         child: Form(
                           key: formkey,
                           child: TextFormField(
+                            key: Key('search'),
                             onFieldSubmitted: (value) {
                               if (formkey.currentState!.validate()) {
                                 formkey.currentState!.save();

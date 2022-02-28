@@ -224,6 +224,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                         height: 15,
                       ),
                       TextFormField(
+                        key: Key('biokey'),
                         initialValue: bio,
                         onSaved: (value) {
                           bio = value!;
