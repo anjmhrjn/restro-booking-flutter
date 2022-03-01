@@ -141,7 +141,7 @@ class _MenuItemsState extends State<MenuItems> {
   }
 
   Widget bigScreenWidget(value, size) {
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 4.5;
     final double itemWidth = size.width / 2;
     return Padding(
       padding: const EdgeInsets.all(20.0),

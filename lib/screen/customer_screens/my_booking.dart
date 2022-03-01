@@ -180,7 +180,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
   }
 
   Widget bigScreenWidget(value, size) {
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 1.6;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
     return Padding(
       padding: const EdgeInsets.all(20.0),

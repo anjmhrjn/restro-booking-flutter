@@ -50,7 +50,7 @@ class _ReserveTableState extends State<ReserveTable> {
 
   Widget getRestroInfo(BuildContext context, restroData, tableData) {
     var size = MediaQuery.of(context).size;
-    var divisible_num = size.width > 600 ? 5 : 10;
+    var divisible_num = size.width > 600 ? 10 : 10;
     final double itemHeight =
         (size.height - kToolbarHeight - 24) / divisible_num;
     final double itemWidth = size.width / 2;
@@ -99,7 +99,7 @@ class _ReserveTableState extends State<ReserveTable> {
           childAspectRatio: (itemWidth / itemHeight),
           crossAxisCount: 2,
           crossAxisSpacing: 15.0,
-          mainAxisSpacing: 10.0,
+          mainAxisSpacing: 0.1,
           children: List.generate(restroInfo.length, (index) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

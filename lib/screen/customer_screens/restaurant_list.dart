@@ -58,7 +58,7 @@ class _RestaurantListState extends State<RestaurantList> {
   }
 
   Widget bigScreenWidget(value, size) {
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 5;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 7;
     final double itemWidth = size.width / 2;
     return Padding(
       padding: const EdgeInsets.all(20.0),
